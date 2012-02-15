@@ -1,4 +1,4 @@
-package MenuScreen;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -14,7 +14,7 @@ public class SlickBlocksGame extends StateBasedGame {
  
     public SlickBlocksGame()
     {
-        super("The Dark Knight");
+        super("Son of Z");
  
         this.addState(new MainMenuState(MAINMENUSTATE));
         this.addState(new GameplayState(GAMEPLAYSTATE));
