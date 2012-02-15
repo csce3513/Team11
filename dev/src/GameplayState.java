@@ -18,6 +18,7 @@ public class GameplayState extends BasicGameState {
    	float x = 400;
    	float y = 300;
    	float scale = 1.0f;
+   	double playerspeed = 0.35;
    	
     GameplayState( int stateID ) 
     {
@@ -47,34 +48,32 @@ public class GameplayState extends BasicGameState {
     	 
         if(input.isKeyDown(Input.KEY_A))
         {
-            player.rotate(-0.2f * delta);
+            player.draw(x-=playerspeed,y,scale);
         }
  
         if(input.isKeyDown(Input.KEY_D))
         {
-            player.rotate(0.2f * delta);
+        	player.draw(x+=playerspeed,y,scale);
         }
  
         if(input.isKeyDown(Input.KEY_W))
         {
-            float hip = 0.4f * delta;
- 
-            float rotation = player.getRotation();
- 
-            x+= hip * Math.sin(Math.toRadians(rotation));
-            y-= hip * Math.cos(Math.toRadians(rotation));
+        	player.draw(x,y-=playerspeed,scale);
         }
- 
-        if(input.isKeyDown(Input.KEY_2))
+        if(input.isKeyDown(Input.KEY_S))
         {
-            scale += (scale >= 5.0f) ? 0 : 0.1f;
-            player.setCenterOfRotation(player.getWidth()/2.0f*scale, player.getHeight()/2.0f*scale);
+        	player.draw(x,y+=playerspeed,scale);
         }
-        if(input.isKeyDown(Input.KEY_1))
-        {
-            scale -= (scale <= 1.0f) ? 0 : 0.1f;
-            player.setCenterOfRotation(player.getWidth()/2.0f*scale, player.getHeight()/2.0f*scale);
-        }
+//        if(input.isKeyDown(Input.KEY_2))
+//        {
+//            scale += (scale >= 5.0f) ? 0 : 0.1f;
+//            player.setCenterOfRotation(player.getWidth()/2.0f*scale, player.getHeight()/2.0f*scale);
+//        }
+//        if(input.isKeyDown(Input.KEY_1))
+//        {
+//            scale -= (scale <= 1.0f) ? 0 : 0.1f;
+//            player.setCenterOfRotation(player.getWidth()/2.0f*scale, player.getHeight()/2.0f*scale);
+//        }
     }
  
     public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 
