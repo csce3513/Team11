@@ -23,7 +23,7 @@ public class SimpleGame extends BasicGame{
     @Override
     public void init(GameContainer gc) throws SlickException 
 	{
-    	background = new Image("data/background.png");
+    	background = new Image("data/backgroundtiled.png");
     	player = new Image("data/player.png");
     }
  
