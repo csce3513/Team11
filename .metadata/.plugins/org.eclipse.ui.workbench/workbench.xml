@@ -3,7 +3,6 @@
 <workbenchAdvisor/>
 <window height="760" maximized="true" width="1024" x="150" y="0">
 <fastViewData fastViewLocation="1024"/>
-<intro standby="true"/>
 <perspectiveBar>
 <itemSize x="160"/>
 </perspectiveBar>
@@ -23,6 +22,7 @@
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="190" y="22"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
@@ -32,14 +32,33 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+</presentation>
 </folder>
 </info>
 </editorArea>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SlickBlocksGame.java" partName="SlickBlocksGame.java" path="C:/Users/Minh Dang/Team11/Team11/dev/src/SlickBlocksGame.java" title="SlickBlocksGame.java" tooltip="dev/src/SlickBlocksGame.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/dev/src/SlickBlocksGame.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="450" selectionTopPixel="0"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainMenuState.java" partName="MainMenuState.java" path="C:/Users/Minh Dang/Team11/Team11/dev/src/MainMenuState.java" title="MainMenuState.java" tooltip="dev/src/MainMenuState.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/dev/src/MainMenuState.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="538" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GameplayState.java" partName="GameplayState.java" path="C:/Users/Minh Dang/Team11/Team11/dev/src/GameplayState.java" title="GameplayState.java" tooltip="dev/src/GameplayState.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/dev/src/GameplayState.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1877" selectionTopPixel="855"/>
+</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
+<expanded>
+<category IMemento.internal.id="Errors (3 items)"/>
+</expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="90" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
@@ -80,19 +99,13 @@
 </customFilters>
 </viewState>
 </view>
-<view id="org.eclipse.ui.internal.introview" partName="Welcome">
-<viewState>
-<presentation currentPage="root" restore="true"/>
-<standbyPart/>
-</viewState>
-</view>
 <view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
 <viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.SourceView" partName="Declaration"/>
 <view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.PackageExplorer" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -157,7 +170,6 @@
 <view id="org.eclipse.jdt.ui.SourceView"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
-<view id="org.eclipse.ui.internal.introview"/>
 <fastViewBars/>
 <layout>
 <mainWindow>
@@ -174,13 +186,11 @@
 </folder>
 </info>
 <info folder="true" part="org.eclipse.ui.internal.ViewStack@a2adb88" ratio="0.75" ratioLeft="750" ratioRight="250" relationship="2" relative="left">
-<folder activePageID="org.eclipse.ui.internal.introview" appearance="2" expanded="2">
-<page content="org.eclipse.ui.internal.introview" label="Welcome"/>
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.25" ratioLeft="250" ratioRight="750" relationship="2" relative="left"/>
@@ -201,7 +211,7 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="right" ratio="0.7493333" ratioLeft="562" ratioRight="188" relationship="2" relative="org.eclipse.ui.editorss">
+<info folder="true" part="right" ratio="0.8610747" ratioLeft="657" ratioRight="106" relationship="2" relative="org.eclipse.ui.editorss">
 <folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
@@ -216,7 +226,110 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/dev/src/SlickBlocksGame.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/dev/src/MainMenuState.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/dev/src/GameplayState.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/dev/src/SimpleGame.java"/>
+</editors>
+<item historyLabel="SlickBlocksGame.java" index="0">
+<position info="not_deleted" x="422" y="0"/>
+</item>
+<item historyLabel="MainMenuState.java" index="1">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="SimpleGame.java" index="3">
+<position info="not_deleted" x="518" y="0"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="631" y="0"/>
+</item>
+<item historyLabel="SimpleGame.java" index="3">
+<position info="not_deleted" x="327" y="0"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="649" y="0"/>
+</item>
+<item historyLabel="SimpleGame.java" index="3">
+<position info="not_deleted" x="480" y="0"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="2246" y="0"/>
+</item>
+<item historyLabel="SimpleGame.java" index="3">
+<position info="not_deleted" x="330" y="1852"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="2243" y="0"/>
+</item>
+<item historyLabel="SlickBlocksGame.java" index="0">
+<position info="not_deleted" x="774" y="0"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position/>
+</item>
+<item historyLabel="SlickBlocksGame.java" index="0">
+<position info="not_deleted" x="617" y="0"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="2246" y="0"/>
+</item>
+<item historyLabel="SlickBlocksGame.java" index="0">
+<position info="not_deleted" x="553" y="13"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="759" y="1"/>
+</item>
+<item historyLabel="SlickBlocksGame.java" index="0">
+<position info="not_deleted" x="431" y="19"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="717" y="53"/>
+</item>
+<item historyLabel="SlickBlocksGame.java" index="0">
+<position info="not_deleted" x="450" y="0"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="1753" y="0"/>
+</item>
+<item historyLabel="MainMenuState.java" index="1">
+<position info="not_deleted" x="799" y="40"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position/>
+</item>
+<item historyLabel="MainMenuState.java" index="1">
+<position info="not_deleted" x="798" y="41"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="1014" y="0"/>
+</item>
+<item historyLabel="MainMenuState.java" index="1">
+<position info="not_deleted" x="1547" y="48"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="1229" y="0"/>
+</item>
+<item historyLabel="MainMenuState.java" index="1">
+<position info="not_deleted" x="1186" y="56"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="2104" y="0"/>
+</item>
+<item historyLabel="SimpleGame.java" index="3">
+<position info="not_deleted" x="330" y="1852"/>
+</item>
+<item historyLabel="GameplayState.java" index="2">
+<position info="not_deleted" x="1877" y="0"/>
+</item>
+<item active="true" historyLabel="MainMenuState.java" index="1">
+<position info="not_deleted" x="1186" y="56"/>
+</item>
+</navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -233,6 +346,18 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SimpleGame.java" tooltip="dev/src/SimpleGame.java">
+<persistable path="/dev/src/SimpleGame.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="GameplayState.java" tooltip="dev/src/GameplayState.java">
+<persistable path="/dev/src/GameplayState.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MainMenuState.java" tooltip="dev/src/MainMenuState.java">
+<persistable path="/dev/src/MainMenuState.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SlickBlocksGame.java" tooltip="dev/src/SlickBlocksGame.java">
+<persistable path="/dev/src/SlickBlocksGame.java"/>
+</file>
 <file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="ClassLoader.class" tooltip="java.lang.ClassLoader">
 <persistable org.eclipse.jdt.ui.ClassFileIdentifier="=dev/C:\/Program Files\/Java\/jre7\/lib\/rt.jar&lt;java.lang(ClassLoader.class"/>
 </file>

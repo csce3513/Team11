@@ -17,8 +17,8 @@ public class MainMenuState extends BasicGameState{
     int stateID = 0;
  
  
-    private static int menuX = 210;
-    private static int menuY = 400;
+    private static int menuX = 410;
+    private static int menuY = 300;
  
     float startGameScale = 1;
     float exitScale = 1;
