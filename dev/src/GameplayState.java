@@ -50,37 +50,17 @@ public class GameplayState extends BasicGameState {
         {
             player.draw(x-=playerspeed,y,scale);
         }
-        if(input.isKeyDown(Input.KEY_LEFT))
-        {
-            player.draw(x-=playerspeed,y,scale);
-        }
  
-        
         if(input.isKeyDown(Input.KEY_D))
         {
         	player.draw(x+=playerspeed,y,scale);
         }
-        if(input.isKeyDown(Input.KEY_RIGHT))
-        {
-        	player.draw(x+=playerspeed,y,scale);
-        }
-        
  
         if(input.isKeyDown(Input.KEY_W))
         {
         	player.draw(x,y-=playerspeed,scale);
         }
-        if(input.isKeyDown(Input.KEY_UP))
-        {
-        	player.draw(x,y-=playerspeed,scale);
-        }
-        
-        
         if(input.isKeyDown(Input.KEY_S))
-        {
-        	player.draw(x,y+=playerspeed,scale);
-        }
-        if(input.isKeyDown(Input.KEY_DOWN))
         {
         	player.draw(x,y+=playerspeed,scale);
         }
