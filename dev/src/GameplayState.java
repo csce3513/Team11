@@ -64,16 +64,16 @@ public class GameplayState extends BasicGameState {
         {
         	player.draw(x,y+=playerspeed,scale);
         }
-//        if(input.isKeyDown(Input.KEY_2))
-//        {
-//            scale += (scale >= 5.0f) ? 0 : 0.1f;
-//            player.setCenterOfRotation(player.getWidth()/2.0f*scale, player.getHeight()/2.0f*scale);
-//        }
-//        if(input.isKeyDown(Input.KEY_1))
-//        {
-//            scale -= (scale <= 1.0f) ? 0 : 0.1f;
-//            player.setCenterOfRotation(player.getWidth()/2.0f*scale, player.getHeight()/2.0f*scale);
-//        }
+        if(input.isKeyDown(Input.KEY_2))
+        {
+            scale += (scale >= 5.0f) ? 0 : 0.1f;
+            player.setCenterOfRotation(player.getWidth()/2.0f*scale, player.getHeight()/2.0f*scale);
+        }
+        if(input.isKeyDown(Input.KEY_1))
+        {
+            scale -= (scale <= 1.0f) ? 0 : 0.1f;
+            player.setCenterOfRotation(player.getWidth()/2.0f*scale, player.getHeight()/2.0f*scale);
+        }
     }
  
     public void render(GameContainer arg0, StateBasedGame arg1, Graphics arg2) throws SlickException 

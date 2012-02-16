@@ -4,7 +4,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
  
@@ -14,6 +16,8 @@ public class MainMenuState extends BasicGameState{
     Image startGameOption = null;
     Image exitOption = null;
  
+    Sound menumusic = null;
+    
     int stateID = 0;
  
  
@@ -40,6 +44,8 @@ public class MainMenuState extends BasicGameState{
  
         // Load the menu images
         Image menuOptions = new Image("data/menuoptions2.png");
+        menumusic = new Sound("data/menutheme.wav");
+        menumusic.loop();
         startGameOption = menuOptions.getSubImage(0, 0, 377, 71);
 
         exitOption = menuOptions.getSubImage(0, 71, 377, 71);
@@ -60,12 +66,13 @@ public class MainMenuState extends BasicGameState{
  
     float scaleStep = 0.0001f;
  
-    public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException {
+    public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException 
+    {
         Input input = gc.getInput();
  
         int mouseX = input.getMouseX();
         int mouseY = input.getMouseY();
- 
+        
         boolean insideStartGame = false;
         boolean insideExit = false;
  
@@ -81,6 +88,7 @@ public class MainMenuState extends BasicGameState{
  
         if(insideStartGame)
         {
+        	
             if(startGameScale < 1.05f)
                 startGameScale += scaleStep * delta;
  
