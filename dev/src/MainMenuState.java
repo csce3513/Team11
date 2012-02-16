@@ -78,6 +78,7 @@ public class MainMenuState extends BasicGameState{
         {
             insideExit = true;
         }
+        //else stay on the screen
  
         if(insideStartGame)
         {
@@ -87,7 +88,7 @@ public class MainMenuState extends BasicGameState{
             if ( input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON) ){                
                 sb.enterState(SlickBlocksGame.GAMEPLAYSTATE);
             }
-        }else{
+        }else if (insideExit){
             if(startGameScale > 1.0f)
                 startGameScale -= scaleStep * delta;
  
