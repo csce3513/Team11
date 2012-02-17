@@ -46,7 +46,7 @@ public class MainMenuState extends BasicGameState{
         Image menuOptions = new Image("data/menuoptions2.png");
         menumusic = new Sound("data/menutheme.wav");
         
-//        menumusic.loop();
+        menumusic.loop();
         startGameOption = menuOptions.getSubImage(0, 0, 377, 71);
 
         exitOption = menuOptions.getSubImage(0, 71, 377, 71);
