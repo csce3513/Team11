@@ -20,6 +20,8 @@ public class GameplayState extends BasicGameState {
    	float scale = 1.0f;
    	double playerspeed = 0.90;
    	
+   	
+   	
     GameplayState( int stateID ) 
     {
        this.stateID = stateID;
