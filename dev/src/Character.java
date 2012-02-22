@@ -7,7 +7,7 @@ public abstract class Character
 	private double x = 400;
 	private double y = 400;
 	private double scale = 0;
-	private double speed = 0.5;
+	private double speed = 0.4;
 	
 	public Character(double xPos, double yPos, double Scale, double Speed)
 	{
