@@ -16,10 +16,11 @@ public class GameplayState extends BasicGameState {
    	// player
    	Image player = null;
    	float x = 400;
-   	float y = 300;
+   	float y = 400;
    	float scale = 1.0f;
-   	double playerspeed = 0.90;
-   	
+   	float playerspeed = 0.9f;
+   	// end player
+   	Character test; // TEST
     GameplayState( int stateID ) 
     {
        this.stateID = stateID;
@@ -40,6 +41,7 @@ public class GameplayState extends BasicGameState {
 	{
     	background = new Image("data/backgroundtiled.png");
     	player = new Image("data/player.png");
+    	
     }
  
     public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException     
@@ -80,6 +82,7 @@ public class GameplayState extends BasicGameState {
     {
     	background.draw(0,0);
     	player.draw(x,y,scale);
+//    	test.getImage().draw(test.getX(), test.getY(), test.getScale());
     }
  
 }
