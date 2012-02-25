@@ -14,28 +14,29 @@ import entity.Entity;
 public class Intermission1SlickBasicGame extends BasicGame{
  
     Entity player = null;
-    Entity land = null;
+    Entity background = null;
     Entity enemy = null;
  
     public Intermission1SlickBasicGame()
     {
-        super("Slick2D Path2Glory - SlickBasicGame");
+        super("Son of Z");
     }
  
     @Override
     public void init(GameContainer gc)
 			throws SlickException {
-    	land = new Entity("land");
- 
-        land.AddComponent( new ImageRenderComponent("LandRender", new Image("data/backgroundtiled.png")) );
+    	background = new Entity("background");
+        background.AddComponent( new ImageRenderComponent("backgroundRender", new Image("data/backgroundtiled.png")) );
  
         player = new Entity("player");
-        player.AddComponent( new ImageRenderComponent("playerRender", new Image("data/player/front.png")) );
+        player.AddComponent( new ImageRenderComponent("playerFront", new Image("data/player/front.png")) );
+        player.AddComponent( new ImageRenderComponent("playerBack", new Image("data/player/back.png")) );
         player.AddComponent( new TopDownMovement("playerMovement") );
         player.setPosition(new Vector2f(400, 300));
         
         enemy = new Entity("enemy");
         enemy.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
+        enemy.AddComponent( new Enemy("enemyrMovement") );
         enemy.setPosition(new Vector2f(300, 300));
     }
  
@@ -43,7 +44,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
     public void update(GameContainer gc, int delta)
 			throws SlickException
     {
-    	land.update(gc, null, delta);
+    	background.update(gc, null, delta);
     	player.update(gc, null, delta);
     	enemy.update(gc, null, delta);
     }
@@ -51,7 +52,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
     public void render(GameContainer gc, Graphics gr)
 			throws SlickException
     {
-    	land.render(gc, null, gr);
+    	background.render(gc, null, gr);
     	player.render(gc, null, gr);
     	enemy.render(gc, null, gr);
     }
