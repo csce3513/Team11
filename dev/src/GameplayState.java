@@ -18,7 +18,9 @@ public class GameplayState extends BasicGameState {
    	float x = 400;
    	float y = 300;
    	float scale = 1.0f;
-   	double playerspeed = 0.90;
+   	double playerspeed = 0.50;
+   	
+   	
    	
     GameplayState( int stateID ) 
     {
