@@ -13,9 +13,9 @@ import entity.Entity;
  
 public class Intermission1SlickBasicGame extends BasicGame{
  
-    Entity plane = null;
+    Entity player = null;
     Entity land = null;
-    
+    Entity enemy = null;
  
     public Intermission1SlickBasicGame()
     {
@@ -29,10 +29,14 @@ public class Intermission1SlickBasicGame extends BasicGame{
  
         land.AddComponent( new ImageRenderComponent("LandRender", new Image("data/backgroundtiled.png")) );
  
-        plane = new Entity("plane");
-        plane.AddComponent( new ImageRenderComponent("PlaneRender", new Image("data/player.png")) );
-        plane.AddComponent( new TopDownMovement("PlaneMovement") );
-        plane.setPosition(new Vector2f(400, 300));
+        player = new Entity("player");
+        player.AddComponent( new ImageRenderComponent("playerRender", new Image("data/player/front.png")) );
+        player.AddComponent( new TopDownMovement("playerMovement") );
+        player.setPosition(new Vector2f(400, 300));
+        
+        enemy = new Entity("enemy");
+        enemy.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
+        enemy.setPosition(new Vector2f(300, 300));
     }
  
     @Override
@@ -40,14 +44,16 @@ public class Intermission1SlickBasicGame extends BasicGame{
 			throws SlickException
     {
     	land.update(gc, null, delta);
-    	plane.update(gc, null, delta);
+    	player.update(gc, null, delta);
+    	enemy.update(gc, null, delta);
     }
  
     public void render(GameContainer gc, Graphics gr)
 			throws SlickException
     {
     	land.render(gc, null, gr);
-    	plane.render(gc, null, gr);
+    	player.render(gc, null, gr);
+    	enemy.render(gc, null, gr);
     }
  
     public static void main(String[] args)

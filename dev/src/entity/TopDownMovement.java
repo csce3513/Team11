@@ -35,21 +35,21 @@ public class TopDownMovement extends Component {
  
         if(input.isKeyDown(Input.KEY_LEFT))
         {
-        	position.x -= 1;
+        	position.x -= 0.3f * delta;
         }
  
         if(input.isKeyDown(Input.KEY_RIGHT))
         {
-        	position.x += 1;
+        	position.x += 0.3f * delta;
         }
  
         if(input.isKeyDown(Input.KEY_UP))
         {
-            position.y -= 1;
+            position.y -= 0.3f * delta;
         }
         if(input.isKeyDown(Input.KEY_DOWN))
         {
-            position.y += 1;
+            position.y += 0.3f * delta;
         }
  
 		owner.setPosition(position);
