@@ -48,11 +48,7 @@ public class Enemy extends Component {
         {
             position.y -= 0.3f * delta;
         }
-//		for(int i=1; i<15; i+=0.5)
-//		{
-//			position.x += 0.5f * delta;
-//		}
-		
+
 		owner.setPosition(position);
 //		owner.setRotation(rotation);
 //		owner.setScale(scale);
