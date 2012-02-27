@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="37" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16">
+  <image source="tiles.png" width="128" height="64"/>
+ </tileset>
+ <tileset firstgid="33" name="collision" tilewidth="16" tileheight="16">
+  <image source="collision.png" width="80" height="32"/>
+ </tileset>
+ <layer name="collision" width="50" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3VQQrAIAwAQb/i/z/Zay8WsUSTdgZyVFwRbA0AAIA/6reppg+mmoiO0Z6Rd1WhY2bN1zt2vYcZK2fUcValsz7RkYuOXHTkoiOXqD/fvJ8LD0OhgegcAAA=
+  </data>
+ </layer>
+ <layer name="tiles" width="50" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WzQ6DIBAGqfXSn3g1tn3/5xSjJntZV+hSSDqTzJF1P1gMIQAAAAAAAMA/0m32tRvJ4BK9hrX/R/QeHat2lMcQ1t4XvXIse9MZep95iRw3UVPzmVBv35ej7CVyTNGX4Sex3ttYo+XQZqPGP2C/w0fKs5Y5tNlImQcvzpyvlkNbmzIPv6TE/agBOdqCHG1BjrYgR1vIHFLr3Z2rxrd1rfe1txqe35gBTqPxROgcAAA=
+  </data>
+ </layer>
+</map>
