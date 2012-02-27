@@ -7,8 +7,8 @@ public class MyClassTest {
 
 	@Test
 	public void testMultiply() {
-		MyClass tester = new MyClass();
-		assertEquals("Result", 50, tester.multiply(10, 5));
+		MyClass test = new MyClass();
+		assertEquals("Result", 50, test.multiply(10, 5));
 	}
 
 }
