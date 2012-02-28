@@ -18,16 +18,16 @@ import org.junit.Test;
 public class Intermission1SlickBasicGameTest 
 {
 	Intermission1SlickBasicGame test = new Intermission1SlickBasicGame();
-	Vector2f playerposition = new Vector2f(250,250);
-	Vector2f enemyposition = new Vector2f(250,250);
 	Entity player = new Entity("player");
 	Entity enemy = new Entity("enemy");
-	player.setPosition(playerposition);
+	
 	boolean check = false;
 	@Test
 	public void testCollision() 
 	{
-		check = test.collision(player, enemy);
+		enemy.setPosition(new Vector2f(299, 250));
+		player.setPosition(new Vector2f(250, 250));
+		check = test.collision(player.getPosition(), enemy.getPosition());
 		assertTrue(check);
 	}
 

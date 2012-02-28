@@ -47,12 +47,12 @@ public class Intermission1SlickBasicGame extends BasicGame{
         enemy.AddComponent( new Enemy("enemyMovement") );
         enemy.setPosition(new Vector2f(300, 300));
         
-        enemy2 = new Entity("enemy");
+        enemy2 = new Entity("enemy2");
         enemy2.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
         enemy2.AddComponent( new Enemy("enemyMovement") );
         enemy2.setPosition(new Vector2f(400, 300));
         
-        enemy3 = new Entity("enemy");
+        enemy3 = new Entity("enemy3");
         enemy3.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
         enemy3.AddComponent( new Enemy("enemyMovement") );
         enemy3.setPosition(new Vector2f(500, 300));
@@ -61,7 +61,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
         enemies.add(enemy);
         enemies.add(enemy2);
         enemies.add(enemy3);
-//        enemies.remove(0);
+
     }
  
     @Override
@@ -71,36 +71,44 @@ public class Intermission1SlickBasicGame extends BasicGame{
     	boolean collision = false; // Karl
     	background.update(gc, null, delta);
     	player.update(gc, null, delta);
-    	enemy.update(gc, null, delta);
- 
     	for(Entity enemy: enemies)
     	{
-    		collision = collision(player, enemy);
+    		enemy.update(gc, null, delta);
+    		collision = collision(player.getPosition(), enemy.getPosition());
+    		
     		if(collision == true)
     		{
-    			killIndex = enemies.indexOf(enemy);
+    			System.out.println("Size before:"); // TEST
+    			System.out.println(enemies.size()); // TEST
     			
+    			killIndex = enemies.indexOf(enemy);
+
     			enemies.remove(killIndex);
+    			
+    			System.out.println("Size after:"); // TEST
+    			System.out.println(enemies.size()); // TEST
     		}
-    		enemy.update(gc, null, delta);
+    		
+    		collision = false;
+//    		enemy.update(gc, null, delta);
     	}
-    	System.out.println(killIndex);
+    	
     }
     public void kill(int x)
     {
     	enemies.remove(x);
     }
     //KARL
-    public boolean collision(Entity player, Entity enemy)
+    public boolean collision(Vector2f player, Vector2f enemy)
     {
     	boolean collide = false;
     	float x,y,x2,y2;
-    	x = player.getPosition().x;
-    	y = player.getPosition().y;
-    	x2 = enemy.getPosition().x;
-    	y2 = enemy.getPosition().y;
+    	x = player.x;
+    	y = player.y;
+    	x2 = enemy.x;
+    	y2 = enemy.y;
     	
-    	if(x == x2 && y == y2)
+    	if((Math.abs(x-x2)<20) && (Math.abs(y-y2)<20))
     		collide = true;
     	
     	return collide;
