@@ -18,11 +18,14 @@ public class Intermission1SlickBasicGame extends BasicGame{
  
     Entity player = null;
     Entity background = null;
-    Entity enemy = null;
+    
     
     ArrayList<Entity> enemies;
+    
+    Entity enemy = null;
     Entity enemy2 = null;
     Entity enemy3 = null;
+    Entity enemy4 = null;
     int killIndex = 0;
    
     public Intermission1SlickBasicGame()
@@ -44,23 +47,29 @@ public class Intermission1SlickBasicGame extends BasicGame{
         
         enemy = new Entity("enemy");
         enemy.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-        enemy.AddComponent( new Enemy("enemyMovement") );
+//        enemy.AddComponent( new Enemy("enemyMovement") );
         enemy.setPosition(new Vector2f(300, 300));
         
         enemy2 = new Entity("enemy2");
         enemy2.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-        enemy2.AddComponent( new Enemy("enemyMovement") );
+//        enemy2.AddComponent( new Enemy("enemyMovement") );
         enemy2.setPosition(new Vector2f(400, 300));
         
         enemy3 = new Entity("enemy3");
         enemy3.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-        enemy3.AddComponent( new Enemy("enemyMovement") );
+//        enemy3.AddComponent( new Enemy("enemyMovement") );
         enemy3.setPosition(new Vector2f(500, 300));
+        
+        enemy4 = new Entity("enemy4");
+        enemy4.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
+//        enemy4.AddComponent( new Enemy("enemyMovement") );
+        enemy4.setPosition(new Vector2f(600, 300));
         
         enemies = new ArrayList<Entity>();
         enemies.add(enemy);
         enemies.add(enemy2);
         enemies.add(enemy3);
+        enemies.add(enemy4);
 
     }
  
@@ -68,35 +77,30 @@ public class Intermission1SlickBasicGame extends BasicGame{
     public void update(GameContainer gc, int delta)
 			throws SlickException
     {
-    	boolean collision = false; // Karl
+    	
     	background.update(gc, null, delta);
     	player.update(gc, null, delta);
+    	enemy.update(gc, null, delta);
+    	
+    }
+   
+    public void kill()
+    {
+    	boolean collision = false; // Karl
     	for(Entity enemy: enemies)
     	{
-    		enemy.update(gc, null, delta);
+    		
     		collision = collision(player.getPosition(), enemy.getPosition());
     		
     		if(collision == true)
     		{
-    			System.out.println("Size before:"); // TEST
-    			System.out.println(enemies.size()); // TEST
-    			
     			killIndex = enemies.indexOf(enemy);
-
     			enemies.remove(killIndex);
-    			
-    			System.out.println("Size after:"); // TEST
-    			System.out.println(enemies.size()); // TEST
     		}
     		
     		collision = false;
-//    		enemy.update(gc, null, delta);
+    		
     	}
-    	
-    }
-    public void kill(int x)
-    {
-    	enemies.remove(x);
     }
     //KARL
     public boolean collision(Vector2f player, Vector2f enemy)
