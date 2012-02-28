@@ -1,7 +1,6 @@
 package entity;
 import java.util.ArrayList;
-import java.util.Iterator;
-
+import java.util.Iterator; 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -9,11 +8,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
- 
 import entity.TopDownMovement;
 import entity.ImageRenderComponent;
 import entity.Entity;
-
 import static org.junit.Assert.*;
 import org.junit.Test;
 

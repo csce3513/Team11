@@ -18,16 +18,9 @@ public class GameplayState extends BasicGameState {
    	float x = 400;
    	float y = 400;
    	float scale = 1.0f;
-<<<<<<< HEAD
    	float playerspeed = 0.9f;
    	// end player
    	Character test; // TEST
-=======
-   	double playerspeed = 0.50;
-   	
-   	
-   	
->>>>>>> 2628ac4420c9d6108dc53f56c04e072844734ad8
     GameplayState( int stateID ) 
     {
        this.stateID = stateID;
