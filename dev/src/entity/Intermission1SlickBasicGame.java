@@ -80,10 +80,14 @@ public class Intermission1SlickBasicGame extends BasicGame{
     	
     	background.update(gc, null, delta);
     	player.update(gc, null, delta);
-    	enemy.update(gc, null, delta);
     	
+    	
+    	for(Entity enemys: enemies)
+    	{
+    	enemys.update(gc, null, delta);
+    	}
+    	kill();
     }
-   
     public void kill()
     {
     	boolean collision = false; // Karl
@@ -97,9 +101,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
     			killIndex = enemies.indexOf(enemy);
     			enemies.remove(killIndex);
     		}
-    		
     		collision = false;
-    		
     	}
     }
     //KARL
@@ -113,8 +115,9 @@ public class Intermission1SlickBasicGame extends BasicGame{
     	y2 = enemy.y;
     	
     	if((Math.abs(x-x2)<20) && (Math.abs(y-y2)<20))
+    	{
     		collide = true;
-    	
+    	}
     	return collide;
     }
     //KARL
@@ -123,7 +126,6 @@ public class Intermission1SlickBasicGame extends BasicGame{
     {
     	background.render(gc, null, gr);
     	player.render(gc, null, gr);
-//    	enemy.render(gc, null, gr);
     	for(Entity enemy: enemies)
     	{
     		enemy.render(gc, null, gr);
@@ -138,5 +140,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
  
          app.setDisplayMode(800, 600, false);
          app.start();
+         
+     
     }
 }
