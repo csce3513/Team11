@@ -27,8 +27,7 @@ public class Intermission1SlickBasicGameTest
 	{
 		enemy.setPosition(new Vector2f(250, 250));
 		player.setPosition(new Vector2f(250, 250));
-		check = test.collision(player.getPosition(), enemy.getPosition());
-		assertTrue(check);
+//		check = enemy.kill();
 	}
 
 }

@@ -1,6 +1,8 @@
 package entity;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -27,7 +29,9 @@ public class Intermission1SlickBasicGame extends BasicGame{
     Entity enemy3 = null;
     Entity enemy4 = null;
     int killIndex = 0;
-   
+    Set<Entity> enemySet = new HashSet<Entity>();
+    
+
     public Intermission1SlickBasicGame()
     {
         super("Son of Z");
@@ -65,44 +69,74 @@ public class Intermission1SlickBasicGame extends BasicGame{
 //        enemy4.AddComponent( new Enemy("enemyMovement") );
         enemy4.setPosition(new Vector2f(600, 300));
         
-        enemies = new ArrayList<Entity>();
-        enemies.add(enemy);
-        enemies.add(enemy2);
-        enemies.add(enemy3);
-        enemies.add(enemy4);
-
+//        enemies = new ArrayList<Entity>();
+//        enemies.add(enemy);
+//        enemies.add(enemy2);
+//        enemies.add(enemy3);
+//        enemies.add(enemy4);
+        
+        enemySet.add(enemy);
+        enemySet.add(enemy2);
+        enemySet.add(enemy3);
+        enemySet.add(enemy4);
     }
  
     @Override
     public void update(GameContainer gc, int delta)
 			throws SlickException
     {
-    	
-    	background.update(gc, null, delta);
+    	Iterator<Entity> i = enemySet.iterator();
+//    	background.update(gc, null, delta);
     	player.update(gc, null, delta);
-    	
-    	
-    	for(Entity enemys: enemies)
+    	// Code using set:
+    	while(i.hasNext())
     	{
-    	enemys.update(gc, null, delta);
+    		Entity e = i.next();
+    		e.update(gc,null,delta);
     	}
     	kill();
+//    	for(Entity enemys: enemies)
+//    	{
+//    	enemys.update(gc, null, delta);
+//    	}
+//    	kill();
+    	
     }
     public void kill()
     {
     	boolean collision = false; // Karl
-    	for(Entity enemy: enemies)
+    	Iterator<Entity> i = enemySet.iterator();
+    	int count = 0;
+    	while(i.hasNext())
     	{
-    		
-    		collision = collision(player.getPosition(), enemy.getPosition());
+    		Entity e = i.next();
+    		collision = collision(player.getPosition(), e.getPosition());
     		
     		if(collision == true)
-    		{
-    			killIndex = enemies.indexOf(enemy);
-    			enemies.remove(killIndex);
-    		}
-    		collision = false;
+        		{
+        			
+        			enemySet.remove(e);
+        			System.out.print("REMOVED " + count+ "\n");
+        			System.out.print("Size: " + enemySet.size() +"\n");
+        			i = enemySet.iterator();
+        		}
+    		
+        	collision = false;
+        	count++;
     	}
+    	
+//    	for(Entity enemy: enemies)
+//    	{
+//    		
+//    		collision = collision(player.getPosition(), enemy.getPosition());
+//    		
+//    		if(collision == true)
+//    		{
+//    			killIndex = enemies.indexOf(enemy);
+//    			enemies.remove(killIndex);
+//    		}
+//    		collision = false;
+//    	}
     }
     //KARL
     public boolean collision(Vector2f player, Vector2f enemy)
@@ -126,10 +160,17 @@ public class Intermission1SlickBasicGame extends BasicGame{
     {
     	background.render(gc, null, gr);
     	player.render(gc, null, gr);
-    	for(Entity enemy: enemies)
+    	Iterator<Entity> i = enemySet.iterator();
+    	while(i.hasNext())
     	{
-    		enemy.render(gc, null, gr);
+    		Entity e = i.next();
+    		e.render(gc,null,gr);
     	}
+    	
+//    	for(Entity enemy: enemies)
+//    	{
+//    		enemy.render(gc, null, gr);
+//    	}
     }
  
     public static void main(String[] args)
