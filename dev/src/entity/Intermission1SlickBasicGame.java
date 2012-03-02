@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -44,29 +45,31 @@ public class Intermission1SlickBasicGame extends BasicGame{
         background.AddComponent( new ImageRenderComponent("backgroundRender", new Image("data/backgroundtiled.png")) );
  
         player = new Entity("player");
-        player.AddComponent( new ImageRenderComponent("playerFront", new Image("data/player/front.png")) );
-//      player.AddComponent( new ImageRenderComponent("playerBack", new Image("data/player/back.png")) );
+//        player.AddComponent( new ImageRenderComponent("playerBack", new Image("data/player/back.png")) );
+//        player.AddComponent( new ImageRenderComponent("playerFront", new Image("data/player/front.png")) );
+        player.setImage(new Image("data/player/front.png"));
+        player.AddComponent( new ImageRenderComponent("playerBack", player.getImage()) );
         player.AddComponent( new TopDownMovement("playerMovement") );
         player.setPosition(new Vector2f(20, 20));
         
         enemy = new Entity("enemy");
         enemy.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-//        enemy.AddComponent( new Enemy("enemyMovement") );
+        enemy.AddComponent( new Enemy("enemyMovement") );
         enemy.setPosition(new Vector2f(300, 300));
         
         enemy2 = new Entity("enemy2");
         enemy2.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-//        enemy2.AddComponent( new Enemy("enemyMovement") );
+        enemy2.AddComponent( new Enemy("enemyMovement") );
         enemy2.setPosition(new Vector2f(400, 300));
         
         enemy3 = new Entity("enemy3");
         enemy3.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-//        enemy3.AddComponent( new Enemy("enemyMovement") );
+        enemy3.AddComponent( new Enemy("enemyMovement") );
         enemy3.setPosition(new Vector2f(500, 300));
         
         enemy4 = new Entity("enemy4");
         enemy4.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-//        enemy4.AddComponent( new Enemy("enemyMovement") );
+        enemy4.AddComponent( new Enemy("enemyMovement") );
         enemy4.setPosition(new Vector2f(600, 300));
         
 //        enemies = new ArrayList<Entity>();
@@ -88,6 +91,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
     	Iterator<Entity> i = enemySet.iterator();
 //    	background.update(gc, null, delta);
     	player.update(gc, null, delta);
+    	
     	// Code using set:
     	while(i.hasNext())
     	{
@@ -116,8 +120,8 @@ public class Intermission1SlickBasicGame extends BasicGame{
         		{
         			
         			enemySet.remove(e);
-        			System.out.print("REMOVED " + count+ "\n");
-        			System.out.print("Size: " + enemySet.size() +"\n");
+//        			System.out.print("REMOVED " + count+ "\n");
+//        			System.out.print("Size: " + enemySet.size() +"\n");
         			i = enemySet.iterator();
         		}
     		

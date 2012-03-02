@@ -2,8 +2,10 @@ package entity;
  
 import java.util.ArrayList;
  
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -17,6 +19,7 @@ public class Entity {
     Vector2f position;
     float scale;
     float rotation;
+    Image img;
  
     RenderComponent renderComponent = null;
  
@@ -97,5 +100,13 @@ public class Entity {
     {
         if(renderComponent != null)
             renderComponent.render(gc, sb, gr);
+    }
+    public void setImage(Image x)
+    {
+    	img = x;
+    }
+    public Image getImage()
+    {
+    	return img;
     }
 }

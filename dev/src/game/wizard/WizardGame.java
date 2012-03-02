@@ -128,7 +128,7 @@ public class WizardGame extends BasicGame
      }
      }
 
-     public void render(GameContainer container, Graphics g) throws SlickException
+     public void render(GameContainer container, Graphics gr) throws SlickException
      {
          grassMap.render(0, 0);
          sprite.draw((int)x, (int)y);
