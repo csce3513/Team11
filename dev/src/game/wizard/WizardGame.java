@@ -23,7 +23,7 @@ public class WizardGame extends BasicGame
 
      /** The collision map indicating which tiles block movement - generated based on tile properties */
      private boolean[][] blocked;
-     private static final int SIZE = 34;
+     private static final int SIZE = 32;
 
      public WizardGame()
      {

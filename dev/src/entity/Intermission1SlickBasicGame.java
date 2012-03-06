@@ -12,6 +12,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.tiled.TiledMap;
  
 import entity.TopDownMovement;
 import entity.ImageRenderComponent;
@@ -31,7 +32,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
     Entity enemy4 = null;
     int killIndex = 0;
     Set<Entity> enemySet = new HashSet<Entity>();
-    
+    TiledMap bg;
 
     public Intermission1SlickBasicGame()
     {
@@ -42,8 +43,8 @@ public class Intermission1SlickBasicGame extends BasicGame{
     public void init(GameContainer gc)
 			throws SlickException {
     	background = new Entity("background");
-        background.AddComponent( new ImageRenderComponent("backgroundRender", new Image("data/backgroundtiled.png")) );
- 
+//        background.AddComponent( new ImageRenderComponent("backgroundRender", new Image("data/backgroundtiled.png")) );
+    	bg = new TiledMap("data/grassmap1.tmx");
         player = new Entity("player");
 //        player.AddComponent( new ImageRenderComponent("playerBack", new Image("data/player/back.png")) );
 //        player.AddComponent( new ImageRenderComponent("playerFront", new Image("data/player/front.png")) );
@@ -55,7 +56,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
         enemy = new Entity("enemy");
         enemy.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
         enemy.AddComponent( new Enemy("enemyMovement") );
-        enemy.setPosition(new Vector2f(300, 300));
+        enemy.setPosition(new Vector2f(300, 400));
         
         enemy2 = new Entity("enemy2");
         enemy2.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
@@ -65,12 +66,12 @@ public class Intermission1SlickBasicGame extends BasicGame{
         enemy3 = new Entity("enemy3");
         enemy3.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
         enemy3.AddComponent( new Enemy("enemyMovement") );
-        enemy3.setPosition(new Vector2f(500, 300));
+        enemy3.setPosition(new Vector2f(500, 200));
         
         enemy4 = new Entity("enemy4");
         enemy4.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
         enemy4.AddComponent( new Enemy("enemyMovement") );
-        enemy4.setPosition(new Vector2f(600, 300));
+        enemy4.setPosition(new Vector2f(600, 500));
         
 //        enemies = new ArrayList<Entity>();
 //        enemies.add(enemy);
@@ -162,7 +163,8 @@ public class Intermission1SlickBasicGame extends BasicGame{
     public void render(GameContainer gc, Graphics gr)
 			throws SlickException
     {
-    	background.render(gc, null, gr);
+//    	background.render(gc, null, gr);
+    	bg.render(0, 0);
     	player.render(gc, null, gr);
     	Iterator<Entity> i = enemySet.iterator();
     	while(i.hasNext())
