@@ -4,9 +4,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
  
-/**
- * @author Minh Dang
- */
 public class SlickBlocksGame extends StateBasedGame {
  
     public static final int MAINMENUSTATE          = 0;
