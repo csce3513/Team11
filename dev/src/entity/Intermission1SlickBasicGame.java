@@ -1,4 +1,5 @@
 package entity;
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,15 +26,14 @@ public class Intermission1SlickBasicGame extends BasicGame{
     
     
     ArrayList<Entity> enemies;
-    
-    Entity enemy = null;
-    Entity enemy2 = null;
-    Entity enemy3 = null;
-    Entity enemy4 = null;
+   
     int killIndex = 0;
     Set<Entity> enemySet = new HashSet<Entity>();
     TiledMap bg;
-
+    Random r = new Random();
+    float randomx;
+	float randomy = 0;
+    
     public Intermission1SlickBasicGame()
     {
         super("Son of Z");
@@ -46,45 +46,45 @@ public class Intermission1SlickBasicGame extends BasicGame{
 //        background.AddComponent( new ImageRenderComponent("backgroundRender", new Image("data/backgroundtiled.png")) );
     	bg = new TiledMap("data/grassmap1.tmx");
         player = new Entity("player");
-//        player.AddComponent( new ImageRenderComponent("playerBack", new Image("data/player/back.png")) );
-//        player.AddComponent( new ImageRenderComponent("playerFront", new Image("data/player/front.png")) );
+//      player.AddComponent( new ImageRenderComponent("playerBack", new Image("data/player/back.png")) );
+//      player.AddComponent( new ImageRenderComponent("playerFront", new Image("data/player/front.png")) );
+        
         player.setImage(new Image("data/player/front.png"));
         player.AddComponent( new ImageRenderComponent("playerBack", player.getImage()) );
         player.AddComponent( new TopDownMovement("playerMovement") );
-        player.setPosition(new Vector2f(20, 20));
-        
-        enemy = new Entity("enemy");
-        enemy.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-        enemy.AddComponent( new Enemy("enemyMovement") );
-        enemy.setPosition(new Vector2f(300, 400));
-        
-        enemy2 = new Entity("enemy2");
-        enemy2.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-        enemy2.AddComponent( new Enemy("enemyMovement") );
-        enemy2.setPosition(new Vector2f(400, 300));
-        
-        enemy3 = new Entity("enemy3");
-        enemy3.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-        enemy3.AddComponent( new Enemy("enemyMovement") );
-        enemy3.setPosition(new Vector2f(500, 200));
-        
-        enemy4 = new Entity("enemy4");
-        enemy4.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
-        enemy4.AddComponent( new Enemy("enemyMovement") );
-        enemy4.setPosition(new Vector2f(600, 500));
-        
-//        enemies = new ArrayList<Entity>();
-//        enemies.add(enemy);
-//        enemies.add(enemy2);
-//        enemies.add(enemy3);
-//        enemies.add(enemy4);
-        
-        enemySet.add(enemy);
-        enemySet.add(enemy2);
-        enemySet.add(enemy3);
-        enemySet.add(enemy4);
+        player.setPosition(new Vector2f(32, 32));
+        randomx = (float) r.nextFloat() * (768-32) + 32;
+        randomy = (float) r.nextFloat() * (568-32) + 32;
+       
+//        enemy = new Entity("enemy");
+//        enemy.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
+//        enemy.AddComponent( new Enemy("enemyMovement") );
+//        enemy.setPosition(new Vector2f(randomx, randomy));
+//
+//        enemySet.add(enemy);
+      createEnemy(500);
+
     }
- 
+    public void createEnemy(int numEnemies) throws SlickException
+    {
+    	int loop = 0;
+    for(int i=0; i<numEnemies; i++)
+    	{
+    		 
+    	randomx = (float) r.nextFloat() * (768-32) + 32;
+        randomy = (float) r.nextFloat() * (568-32) + 32;
+        System.out.println(randomx);
+        System.out.println(randomy);
+
+    	Entity enemy = new Entity("");
+    	enemy.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
+        enemy.AddComponent( new Enemy("enemyMovement") );
+        enemy.setPosition(new Vector2f(randomx, randomy));
+        enemySet.add(enemy);
+        loop = loop + 1;
+//        System.out.println("LOOP:" + loop);
+    	}
+    }
     @Override
     public void update(GameContainer gc, int delta)
 			throws SlickException
@@ -129,21 +129,8 @@ public class Intermission1SlickBasicGame extends BasicGame{
         	collision = false;
         	count++;
     	}
-    	
-//    	for(Entity enemy: enemies)
-//    	{
-//    		
-//    		collision = collision(player.getPosition(), enemy.getPosition());
-//    		
-//    		if(collision == true)
-//    		{
-//    			killIndex = enemies.indexOf(enemy);
-//    			enemies.remove(killIndex);
-//    		}
-//    		collision = false;
-//    	}
     }
-    //KARL
+    
     public boolean collision(Vector2f player, Vector2f enemy)
     {
     	boolean collide = false;
