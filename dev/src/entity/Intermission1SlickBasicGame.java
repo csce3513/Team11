@@ -23,7 +23,8 @@ public class Intermission1SlickBasicGame extends BasicGame{
  
     Entity player = null;
     Entity background = null;
-    
+    Entity statusPanel = null;
+  
     
     ArrayList<Entity> enemies;
    
@@ -46,6 +47,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
 //        background.AddComponent( new ImageRenderComponent("backgroundRender", new Image("data/backgroundtiled.png")) );
     	bg = new TiledMap("data/grassmap1.tmx");
         player = new Entity("player");
+        statusPanel = new Entity("data/player/front.png");
 //      player.AddComponent( new ImageRenderComponent("playerBack", new Image("data/player/back.png")) );
 //      player.AddComponent( new ImageRenderComponent("playerFront", new Image("data/player/front.png")) );
         
@@ -53,8 +55,14 @@ public class Intermission1SlickBasicGame extends BasicGame{
         player.AddComponent( new ImageRenderComponent("playerBack", player.getImage()) );
         player.AddComponent( new TopDownMovement("playerMovement") );
         player.setPosition(new Vector2f(32, 32));
+          
+        statusPanel.setImage(new Image("data/StatusPanel/StatusPanel.png"));
+        statusPanel.AddComponent(new ImageRenderComponent("", statusPanel.getImage()));
+        statusPanel.AddComponent(new TopDownMovement(""));
+        statusPanel.setPosition(new Vector2f(-2, 600));
         randomx = (float) r.nextFloat() * (768-32) + 32;
         randomy = (float) r.nextFloat() * (568-32) + 32;
+       
        
 //        enemy = new Entity("enemy");
 //        enemy.AddComponent(new ImageRenderComponent("EnemyRender", new Image ("data/enemy.png")) );
@@ -152,7 +160,9 @@ public class Intermission1SlickBasicGame extends BasicGame{
     {
 //    	background.render(gc, null, gr);
     	bg.render(0, 0);
+    	statusPanel.render(gc, null, gr);
     	player.render(gc, null, gr);
+    
     	Iterator<Entity> i = enemySet.iterator();
     	while(i.hasNext())
     	{
@@ -172,7 +182,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
          AppGameContainer app =
 			new AppGameContainer( new Intermission1SlickBasicGame() );
  
-         app.setDisplayMode(800, 600, false);
+         app.setDisplayMode(800, 700, false);
          app.start();
          
      
