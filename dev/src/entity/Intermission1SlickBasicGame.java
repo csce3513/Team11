@@ -70,7 +70,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
 //        enemy.setPosition(new Vector2f(randomx, randomy));
 //
 //        enemySet.add(enemy);
-      createEnemy(500);
+      createEnemy(50);
 
     }
     public void createEnemy(int numEnemies) throws SlickException
