@@ -77,27 +77,27 @@ public class TopDownMovement extends Component {
 		float fdelta = delta * 0.3f;
 		Input input = gc.getInput();
 
-        if(input.isKeyDown(Input.KEY_LEFT))
+        if((input.isKeyDown(Input.KEY_LEFT)) || (input.isKeyDown(Input.KEY_A)))
         {
         	
         	position.x -= fdelta;
 
         }
  
-        if(input.isKeyDown(Input.KEY_RIGHT))
+        if((input.isKeyDown(Input.KEY_RIGHT)) || (input.isKeyDown(Input.KEY_D)))
         {
         	
         	position.x += fdelta;
 
         }
  
-        if(input.isKeyDown(Input.KEY_UP))
+        if(input.isKeyDown(Input.KEY_UP) || (input.isKeyDown(Input.KEY_W)))
         {
         	owner.setImage(up);
             position.y -= fdelta;
            
         }
-        if(input.isKeyDown(Input.KEY_DOWN))
+        if(input.isKeyDown(Input.KEY_DOWN) || (input.isKeyDown(Input.KEY_S)))
         {
         	owner.setImage(down);
             position.y += fdelta;
