@@ -93,7 +93,8 @@ public class TopDownMovement extends Component {
  
         if(input.isKeyDown(Input.KEY_UP) || (input.isKeyDown(Input.KEY_W)))
         {
-        	owner.setImage(up);
+        	//owner.setImage(up);
+        	sprite = up;
             position.y -= fdelta;
            
         }

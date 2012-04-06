@@ -15,9 +15,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
  
-import entity.TopDownMovement;
-import entity.ImageRenderComponent;
-import entity.Entity;
+//import entity.TopDownMovement;
+//import entity.ImageRenderComponent;
+//import entity.Entity;
  
 public class Intermission1SlickBasicGame extends BasicGame{
  
@@ -148,7 +148,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
     	x2 = enemy.x;
     	y2 = enemy.y;
     	
-    	if((Math.abs(x-x2)<20) && (Math.abs(y-y2)<20))
+    	if((Math.abs(x-x2)<20) && (Math.abs(y-y2)<20)) 		
     	{
     		collide = true;
     	}
