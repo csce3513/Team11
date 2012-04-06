@@ -27,7 +27,7 @@ public class TopDownMovement extends Component {
 	{
 		this.id = id;
 	}
- 
+
 	public float getSpeed()
 	{
 		return speed;

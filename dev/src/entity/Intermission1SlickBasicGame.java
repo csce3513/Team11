@@ -24,16 +24,22 @@ public class Intermission1SlickBasicGame extends BasicGame{
     Entity player = null;
     Entity background = null;
     Entity statusPanel = null;
-  
     
+    int numCrosses = 6;
+    
+    String healthfull = "";
     ArrayList<Entity> enemies;
-   
+    ArrayList<Entity> crosses;
+    
     int killIndex = 0;
     Set<Entity> enemySet = new HashSet<Entity>();
+    Set<Entity> crossSet = new HashSet<Entity>();
     TiledMap bg;
     Random r = new Random();
     float randomx;
 	float randomy = 0;
+	float xCrossCoord = 30;
+	float yCrossCoord = 600;
     
     public Intermission1SlickBasicGame()
     {
@@ -50,12 +56,12 @@ public class Intermission1SlickBasicGame extends BasicGame{
         statusPanel = new Entity("data/player/front.png");
 //      player.AddComponent( new ImageRenderComponent("playerBack", new Image("data/player/back.png")) );
 //      player.AddComponent( new ImageRenderComponent("playerFront", new Image("data/player/front.png")) );
-        
+       
         player.setImage(new Image("data/player/front.png"));
         player.AddComponent( new ImageRenderComponent("playerBack", player.getImage()) );
         player.AddComponent( new TopDownMovement("playerMovement") );
         player.setPosition(new Vector2f(32, 32));
-          
+        
         statusPanel.setImage(new Image("data/StatusPanel/StatusPanel.png"));
         statusPanel.AddComponent(new ImageRenderComponent("", statusPanel.getImage()));
         statusPanel.AddComponent(new TopDownMovement(""));
@@ -71,6 +77,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
 //
 //        enemySet.add(enemy);
       createEnemy(50);
+      createCross(numCrosses);
 
     }
     public void createEnemy(int numEnemies) throws SlickException
@@ -93,11 +100,35 @@ public class Intermission1SlickBasicGame extends BasicGame{
 //        System.out.println("LOOP:" + loop);
     	}
     }
+    
+    public void createCross(int numCrosses) throws SlickException
+    {
+    	int loop = 0;
+    for(int i=0; i < numCrosses; i++)
+    	{
+    		 
+    	xCrossCoord = xCrossCoord + 15;
+        System.out.println(xCrossCoord);
+        System.out.println(yCrossCoord);
+
+    	Entity redCross = new Entity("");
+    	redCross.AddComponent(new ImageRenderComponent("CrossRender", new Image ("data/StatusPanel/redcrs.png")) );
+        redCross.AddComponent( new RedCross("health cross") );
+        //redCross.setScale(1);
+        redCross.AddComponent(new TopDownMovement(""));
+        redCross.setPosition(new Vector2f(xCrossCoord, yCrossCoord));
+        crossSet.add(redCross);
+        loop = loop + 1;
+        System.out.println("LOOP:" + loop);
+    	}
+    }
+    
     @Override
     public void update(GameContainer gc, int delta)
 			throws SlickException
     {
     	Iterator<Entity> i = enemySet.iterator();
+    	Iterator<Entity> crossIter = crossSet.iterator();
 //    	background.update(gc, null, delta);
     	player.update(gc, null, delta);
     	
@@ -107,6 +138,12 @@ public class Intermission1SlickBasicGame extends BasicGame{
     		Entity e = i.next();
     		e.update(gc,null,delta);
     	}
+    	while(crossIter.hasNext())
+    	{
+    		Entity c = crossIter.next();
+    		c.update(gc, null, delta);
+    	}
+    	
     	kill();
 //    	for(Entity enemys: enemies)
 //    	{
@@ -169,7 +206,13 @@ public class Intermission1SlickBasicGame extends BasicGame{
     		Entity e = i.next();
     		e.render(gc,null,gr);
     	}
-    	
+    	/*Iterator<Entity> crossIter = crossSet.iterator();
+    	while(crossIter.hasNext())
+    	{
+    		Entity c = i.next();
+    		c.render(gc,null,gr);
+    	}
+    	*/
 //    	for(Entity enemy: enemies)
 //    	{
 //    		enemy.render(gc, null, gr);
