@@ -24,6 +24,8 @@ public class Intermission1SlickBasicGame extends BasicGame{
     Entity player = null;
     Entity background = null;
     Entity statusPanel = null;
+    Image cross1, cross2, cross3, cross4, cross5;
+    Image life1, life2, life3;
     
     int numCrosses = 6;
     
@@ -49,6 +51,14 @@ public class Intermission1SlickBasicGame extends BasicGame{
     @Override
     public void init(GameContainer gc)
 			throws SlickException {
+    	cross1 = new Image("data/player/back.png");
+    	cross2 = new Image("data/player/back.png");
+    	cross3 = new Image("data/player/back.png");
+    	cross4 = new Image("data/player/back.png");
+    	cross5 = new Image("data/player/back.png");
+    	life1 = new Image("data/player/front.png");
+    	life2 = new Image("data/player/front.png");
+    	life3 = new Image("data/player/front.png");
     	background = new Entity("background");
 //        background.AddComponent( new ImageRenderComponent("backgroundRender", new Image("data/backgroundtiled.png")) );
     	bg = new TiledMap("data/grassmap1.tmx");
@@ -217,6 +227,14 @@ public class Intermission1SlickBasicGame extends BasicGame{
 //    	{
 //    		enemy.render(gc, null, gr);
 //    	}
+    	cross1.draw(45, 640);
+    	cross2.draw(85, 640);
+    	cross3.draw(125, 640);
+    	cross4.draw(165, 640);
+    	cross5.draw(205, 640);
+    	life1.draw(525, 640);
+    	life2.draw(565, 640);
+    	life3.draw(605, 640);
     }
  
     public static void main(String[] args)
