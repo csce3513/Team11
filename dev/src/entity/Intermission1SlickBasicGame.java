@@ -51,11 +51,11 @@ public class Intermission1SlickBasicGame extends BasicGame{
     @Override
     public void init(GameContainer gc)
 			throws SlickException {
-    	cross1 = new Image("data/player/back.png");
-    	cross2 = new Image("data/player/back.png");
-    	cross3 = new Image("data/player/back.png");
-    	cross4 = new Image("data/player/back.png");
-    	cross5 = new Image("data/player/back.png");
+    	cross1 = new Image("data/StatusPanel/RedCross.png");
+    	cross2 = new Image("data/StatusPanel/RedCross.png");
+    	cross3 = new Image("data/StatusPanel/RedCross.png");
+    	cross4 = new Image("data/StatusPanel/RedCross.png");
+    	cross5 = new Image("data/StatusPanel/RedCross.png");
     	life1 = new Image("data/player/front.png");
     	life2 = new Image("data/player/front.png");
     	life3 = new Image("data/player/front.png");
@@ -122,7 +122,7 @@ public class Intermission1SlickBasicGame extends BasicGame{
         System.out.println(yCrossCoord);
 
     	Entity redCross = new Entity("");
-    	redCross.AddComponent(new ImageRenderComponent("CrossRender", new Image ("data/StatusPanel/redcrs.png")) );
+    	redCross.AddComponent(new ImageRenderComponent("CrossRender", new Image ("data/StatusPanel/RedCross.png")) );
         redCross.AddComponent( new RedCross("health cross") );
         //redCross.setScale(1);
         redCross.AddComponent(new TopDownMovement(""));
