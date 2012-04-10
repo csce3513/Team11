@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="30" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="collision" tilewidth="16" tileheight="16">
+  <image source="collision.png" width="80" height="32"/>
+ </tileset>
+ <tileset firstgid="11" name="grass" tilewidth="16" tileheight="16">
+  <image source="grass.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="75" name="rock" tilewidth="16" tileheight="16">
+  <image source="rocks.png" width="128" height="128"/>
+ </tileset>
+ <layer name="collision" width="40" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2WQQ7AIAgE8f+f7rk9VLYLXUx2Ek4SGE1EV0Ss4TEV+3HYj8N+HCq/7GxT+CE9/94DWkvhh+bb714Lzc/6VTh2+CF5mTpoPuLH/s2+3F10FjFn2TFfqqmezx2c4Df1/X32362r/d76q/122I/Dfhyn+E2OC8T6sInAEgAA
+  </data>
+ </layer>
+ <layer name="tiles" width="40" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC82W126CMQyF//vuPeiETujei5ZC6eL936cnElatyPFxuerFJ4SS33GOfZIMqqoa/HPGwDiYAJNgCkyDGTA7wjibvwv2wD44AIegafyP5peYBwtgESyBZbACVsGcGmex0vxjcAJOwRk4BxfGf8lvjqyfWAPrYANsgi2wDeqgpsZZrLqj3y24A/fgQeWn41vrJ3acuA01zmI1Hf1eQAe8gq7KT8e31k8cOXFbapzFSvOvwc1Qr9K8b5Vfi6yfYH0lvyxWqlsbPA/1Ks3T/rgEV9m+dB8kWF/JL4uV6tYH7+DDmaf98Qiesn11qt8+SNQCGtYDsXTdBs487Y8eeMv29Qm+hvESjYCGzUAsWVP6rjSva8y1fKF7lHnzguirz1vdd2wvni90jzJvPhB9tRYRD8vani90jzJvdom+WouIh1mP6h7oVdyb30RfrUXEw7K25wvtNcubzNO5HpYWJX2i7wPP58zTuR6WFswfbA3vbcY8netRykU0zrWTNaIaRjWXnrP0SHUo9ZzlX3b2slwszUWP0j5LPWf5l529rP5WXUWPfK7kWKqz5V929rIes84S0SOfm/dz29Eyevaye8M6W0WPfG7KUde672gZPXvZvWH1ufeuy88Fll+t8t9F7N6wauO966TWUg92/zYq/13E3nTW3r13nawvGrP7l9WPven092xuV8UVjdn9y+r313GWo3wnGkf869Vv1HH2neQf8a+331HH2XfR/P4zPy3QW5TAEgAA
+  </data>
+ </layer>
+</map>
