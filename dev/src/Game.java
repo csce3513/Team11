@@ -96,7 +96,7 @@ public class Game extends BasicGame {
 		
 
 		
-		if (container.getInput().isKeyDown(Input.KEY_LEFT)){
+		if ((container.getInput().isKeyDown(Input.KEY_LEFT)) || (container.getInput().isKeyDown(Input.KEY_A))){
 			playerX--;
 			enemyX++;
 			playerPoly.setX(playerX);
@@ -122,7 +122,7 @@ public class Game extends BasicGame {
 				e.printStackTrace();
 			}
 		}
-		if (container.getInput().isKeyDown(Input.KEY_RIGHT)){
+		if ((container.getInput().isKeyDown(Input.KEY_RIGHT)) || (container.getInput().isKeyDown(Input.KEY_D))) {
 			playerX++;
 			enemyX--;
 			playerPoly.setX(playerX);
@@ -147,7 +147,7 @@ public class Game extends BasicGame {
 				e.printStackTrace();
 			}
 		}
-		if (container.getInput().isKeyDown(Input.KEY_UP)){
+		if ((container.getInput().isKeyDown(Input.KEY_UP)) || (container.getInput().isKeyDown(Input.KEY_W))){
 			playerY--;
 			enemyY++;
 			playerPoly.setY(playerY);
@@ -172,7 +172,7 @@ public class Game extends BasicGame {
 				e.printStackTrace();
 			}
 		}
-		if (container.getInput().isKeyDown(Input.KEY_DOWN)){
+		if ((container.getInput().isKeyDown(Input.KEY_DOWN)) || (container.getInput().isKeyDown(Input.KEY_S))){
 			playerY++;
 			enemyY--;
 			playerPoly.setY(playerY);
