@@ -119,7 +119,7 @@ public class Game extends BasicGame {
 					enemyPoly.setX(enemyX);
 				}
 				if (battle()){
-					playerX += 10;
+					playerX += 20;
 					playerPoly.setX(playerX + 20);
 					enemyX--;
 					enemyPoly.setX(enemyX);
@@ -147,7 +147,7 @@ public class Game extends BasicGame {
 					enemyPoly.setX(enemyX);
 				}
 				if (battle()){
-					playerX-= 10;
+					playerX-= 20;
 					playerPoly.setX(playerX);
 					enemyX++;
 					enemyPoly.setX(enemyX);
@@ -173,7 +173,7 @@ public class Game extends BasicGame {
 					enemyPoly.setY(enemyY);
 				}
 				if (battle()){
-					playerY += 10;
+					playerY += 20;
 					playerPoly.setY(playerY);
 					enemyY--;
 					enemyPoly.setY(enemyY);
@@ -199,7 +199,7 @@ public class Game extends BasicGame {
 					enemyPoly.setY(enemyY);
 				}
 				if (battle()){
-					playerY -= 10;
+					playerY -= 20;
 					playerPoly.setY(playerY);
 					enemyY++;
 					enemyPoly.setY(enemyY);
