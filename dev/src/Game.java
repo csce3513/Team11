@@ -20,7 +20,7 @@ public class Game extends BasicGame {
     Image gameover;
     Image startButton;
     int menuState = 0;
-    String enemyRef = "data/enemy.png";
+    String enemyRef = "data/enemies.png";
 	int numCrosses = 5;
 	int numLives = 3;
 	float playerSpeed = 90;
@@ -62,7 +62,7 @@ public class Game extends BasicGame {
     	life3 = new Image("data/front.png");
     	empty = new Image("data/empty.png");
 		container.setVSync(true);  //display syncs with vertical refresh
-		SpriteSheet sheet = new SpriteSheet("data/front.png", 32, 44); //player location
+		SpriteSheet sheet = new SpriteSheet("data/playermove.png", 32, 64); //player location
 		SpriteSheet enemySheet = new SpriteSheet(enemyRef, 32, 32); //enemy reference
 		map = new BlockMap("data/map1.tmx"); //map location
 		player = new Animation();
@@ -73,8 +73,9 @@ public class Game extends BasicGame {
 		
 		
 		//movement animation
-		for (int frame = 0; frame < 1; frame++){
-			player.addFrame(sheet.getSprite(frame, 0), 150);
+		// PLAYER
+		for (int frame = 0; frame < 8; frame++){
+			player.addFrame(sheet.getSprite(frame, 0), 10000); // 150 time in ms
 		}
 		
 		playerPoly = new Polygon(new float[]{
@@ -83,8 +84,8 @@ public class Game extends BasicGame {
 											 playerX+32, playerY+44,
 											 playerX, playerY+44
 		});	
-		
-		for (int frame = 0; frame < 1; frame++){
+		// ENEMIES
+		for (int frame = 0; frame < 2; frame++){
 			enemy.addFrame(enemySheet.getSprite(frame, 0), 150);
 		}
 		
