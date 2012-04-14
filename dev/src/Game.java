@@ -24,6 +24,7 @@ public class Game extends BasicGame {
 	int numCrosses = 5;
 	int numLives = 3;
 	float playerSpeed = 90;
+	boolean enemyDead = false;
 	//player start position
 	private float playerX = 320;
 	private float playerY = 240;
@@ -36,6 +37,7 @@ public class Game extends BasicGame {
 	
 	private Animation player;
 	private Animation enemy;
+	private Animation arrow;
 	
 	private Polygon playerPoly;
 	private Polygon enemyPoly;
@@ -69,6 +71,7 @@ public class Game extends BasicGame {
 		//player.setAutoUpdate(true);
 		player.setSpeed(playerSpeed);
 		enemy = new Animation();
+		arrow = new Animation();
 		//enemy.setAutoUpdate(true);
 		
 		
@@ -125,7 +128,7 @@ public class Game extends BasicGame {
 					enemyX--;
 					enemyPoly.setX(enemyX);
 					numCrosses--;
-				
+					enemyDead = true;
 				}
 				
 			} catch (SlickException e) {
@@ -153,6 +156,7 @@ public class Game extends BasicGame {
 					enemyX++;
 					enemyPoly.setX(enemyX);
 					numCrosses--;
+					enemyDead = true;
 				}
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
@@ -179,6 +183,7 @@ public class Game extends BasicGame {
 					enemyY--;
 					enemyPoly.setY(enemyY);
 					numCrosses--;
+					enemyDead = true;
 				}
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
@@ -205,6 +210,7 @@ public class Game extends BasicGame {
 					enemyY++;
 					enemyPoly.setY(enemyY);
 					numCrosses--;
+					
 				}
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
@@ -215,8 +221,6 @@ public class Game extends BasicGame {
 		try {
 			if (battle()){
 				System.out.println("BATTLE");
-				enemy.addFrame(empty, 150);
-
 				
 			}
 		} catch (SlickException e) {
@@ -244,15 +248,22 @@ public class Game extends BasicGame {
 		return false;
 	}
 	
-	public boolean entityCollisionWith() throws SlickException{
-		for (int i = 0; i < BlockMap.entities.size(); i++){
-			Block entity1 = (Block) BlockMap.entities.get(i);
-			if (playerPoly.intersects(entity1.poly)){
-				return true;
-			}
+	   public boolean entityCollisionWith() throws SlickException
+	   {
+		   for (int i = 0; i < BlockMap.entities.size(); i++)
+		   {
+			   Block entity1 = (Block) BlockMap.entities.get(i);
+			   if (playerPoly.intersects(entity1.poly)){
+			   	return true;
+		   }
 					
 		}
-		return false;
+	   return false;
+		
+	   /*if((container.getInput().mousePressed()))
+	   {
+		           // on this one I was trying to set it up so that when you press the mouse button the player shoots an arrow.
+	   }*/
 	}
 	
 	public void render(GameContainer container, Graphics g)  {
@@ -263,7 +274,10 @@ public class Game extends BasicGame {
 	{
 		BlockMap.tmap.render(0, 0);
 		g.drawAnimation(player, playerX, playerY);
-		g.drawAnimation(enemy, enemyX, enemyY);
+		if(enemyDead == false)
+		{
+			g.drawAnimation(enemy, enemyX, enemyY);
+		}
 		//g.draw(enemyPoly);
 		//g.draw(playerPoly);
 		StatusPanel.draw(0, 480);
