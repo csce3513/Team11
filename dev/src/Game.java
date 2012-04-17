@@ -19,18 +19,18 @@ public class Game extends BasicGame {
     Image menu;
     Image gameover;
     Image startButton;
-    int menuState = 0;
+    int menuState;
     String enemyRef = "data/enemies.png";
-	int numCrosses = 5;
-	int numLives = 3;
+	int numCrosses;
+	int numLives;
 	float playerSpeed = 90;
-	boolean enemyDead = false;
+	boolean enemyDead;
 	//player start position
-	private float playerX = 320;
-	private float playerY = 240;
-	
-	private float enemyX = 32;
-	private float enemyY = 32;
+	private float playerX;
+	private float playerY;
+	int directionX;
+	private float enemyX;
+	private float enemyY;
 	
 	//map using Tiled
 	//private TiledMap map;
@@ -50,7 +50,15 @@ public class Game extends BasicGame {
 	
 	
 	public void init(GameContainer container) throws SlickException {
-		
+		directionX = 1;
+		enemyX = 32;
+		enemyY = 32;
+		enemyDead = false;
+		playerX = 320;
+		playerY = 240;
+		menuState = 0;
+		numCrosses = 5;
+		numLives = 3;
 		gameover = new Image("data/gameover.png");
 		menu = new Image("data/titlescreen.png");
 		StatusPanel = new Image("data/StatusPanel.png");
@@ -104,43 +112,63 @@ public class Game extends BasicGame {
 	
 	public void update(GameContainer container, int delta) 
 	{ 	
+		if(directionX < 1)
+		enemyX--;
+		else
+		enemyX++;
+		try {
+			if (enemyCollisionWith()){
+				if(directionX < 1)
+					enemyX = enemyX + 2;
+				else
+					enemyX--;
+				enemyPoly.setX(enemyX);
+				directionX = directionX * -1;
+			}
+		} catch (SlickException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		if(container.getInput().isKeyDown(Input.KEY_N))
 		{
 			menuState = 1;
 		}
+			
 		if ((container.getInput().isKeyDown(Input.KEY_LEFT)) || (container.getInput().isKeyDown(Input.KEY_A))){
-			playerX--;
-			enemyX++;
-			playerPoly.setX(playerX);
-			enemyPoly.setX(enemyX);
-			try {
-				if (entityCollisionWith()){
-					playerX++;
-					playerPoly.setX(playerX);
-				}
-				if (enemyCollisionWith()){
-					enemyX--;
-					enemyPoly.setX(enemyX);
-				}
-				if (battle()){
-					playerX += 20;
-					playerPoly.setX(playerX + 20);
-					enemyX--;
-					enemyPoly.setX(enemyX);
-					numCrosses--;
-					enemyDead = true;
-				}
-				
-			} catch (SlickException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				playerX--;
+				//enemyX++;
+				playerPoly.setX(playerX);
+				//enemyPoly.setX(enemyX);
 			}
-		}
+				try {
+					if (entityCollisionWith()){
+						playerX++;
+						playerPoly.setX(playerX);
+					}
+					if (enemyCollisionWith()){
+						enemyX--;
+						enemyPoly.setX(enemyX);
+					}
+					if (battle()){
+						playerX += 20;
+						playerPoly.setX(playerX + 20);
+						enemyX--;
+						enemyPoly.setX(enemyX);
+						numCrosses--;
+						enemyDead = true;
+					}
+					
+				} catch (SlickException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+		
 		if ((container.getInput().isKeyDown(Input.KEY_RIGHT)) || (container.getInput().isKeyDown(Input.KEY_D))) {
 			playerX++;
-			enemyX--;
+			//enemyX--;
 			playerPoly.setX(playerX);
-			enemyPoly.setX(enemyX);
+			//enemyPoly.setX(enemyX);
 			try {
 				if (entityCollisionWith()){
 					playerX--;
@@ -165,9 +193,9 @@ public class Game extends BasicGame {
 		}
 		if ((container.getInput().isKeyDown(Input.KEY_UP)) || (container.getInput().isKeyDown(Input.KEY_W))){
 			playerY--;
-			enemyY++;
+			//enemyY++;
 			playerPoly.setY(playerY);
-			enemyPoly.setY(enemyY);
+			//enemyPoly.setY(enemyY);
 			try {
 				if (entityCollisionWith()){
 					playerY++;
@@ -192,9 +220,9 @@ public class Game extends BasicGame {
 		}
 		if ((container.getInput().isKeyDown(Input.KEY_DOWN)) || (container.getInput().isKeyDown(Input.KEY_S))){
 			playerY++;
-			enemyY--;
+			//enemyY--;
 			playerPoly.setY(playerY);
-			enemyPoly.setY(enemyY);
+			//enemyPoly.setY(enemyY);
 			try {
 				if (entityCollisionWith()){
 					playerY--;
@@ -227,6 +255,9 @@ public class Game extends BasicGame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		enemyX = enemyX++;
+		enemyPoly.setX(enemyX);
 		
 	}
 	
@@ -269,18 +300,20 @@ public class Game extends BasicGame {
 	public void render(GameContainer container, Graphics g)  {
 		
 	menu.draw();
-		
-	if(menuState == 1)
+	
+	if(menuState == 1) // when 'n' is pressed menuState becomes = 1
 	{
 		BlockMap.tmap.render(0, 0);
 		g.drawAnimation(player, playerX, playerY);
-		if(enemyDead == false)
-		{
+		//if(enemyDead == false)
+		//{
 			g.drawAnimation(enemy, enemyX, enemyY);
-		}
+		//}
+			
 		//g.draw(enemyPoly);
 		//g.draw(playerPoly);
 		StatusPanel.draw(0, 480);
+		
 		//Draws the correct amount of red crosses after numCrosses is decremented when there is player enemy contact
 		if(numCrosses == 5)
 		{
@@ -340,7 +373,17 @@ public class Game extends BasicGame {
 		}
 		if( numLives == 0)
 		{
-			gameover.draw();
+			gameover.draw(); //game over screen is displayed when numLives = 0
+			
+			/*game is reinitialized so that it's ready for a new game.
+			try 
+			{
+				container.reinit();
+			} 
+			catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
 		}
 	}
     
