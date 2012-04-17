@@ -72,7 +72,7 @@ public class Game extends BasicGame {
     	life3 = new Image("data/front.png");
     	empty = new Image("data/empty.png");
 		container.setVSync(true);  //display syncs with vertical refresh
-		SpriteSheet sheet = new SpriteSheet("data/playermove.png", 32, 64); //player location
+		SpriteSheet sheet = new SpriteSheet("data/L_sidetexture.png", 48, 48); //player location
 		SpriteSheet enemySheet = new SpriteSheet(enemyRef, 32, 32); //enemy reference
 		map = new BlockMap("data/map1.tmx"); //map location
 		player = new Animation();
@@ -85,7 +85,7 @@ public class Game extends BasicGame {
 		
 		//movement animation
 		// PLAYER
-		for (int frame = 0; frame < 8; frame++){
+		for (int frame = 0; frame < 7; frame++){
 			player.addFrame(sheet.getSprite(frame, 0), 10000); // 150 time in ms
 		}
 		
