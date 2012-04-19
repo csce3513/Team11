@@ -115,13 +115,13 @@ public class Game extends BasicGame {
 		for (int frame = 0; frame < 1; frame++){
 			playerNoMove.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
 		}
-		for (int frame = 0; frame < 3; frame++){
+		for (int frame = 0; frame < 7; frame++){
 			playerRight.addFrame(walk_R.getSprite(frame, 1), 10000); // 150 time in ms
 		}
-		for (int frame = 0; frame < 3; frame++){
+		for (int frame = 0; frame < 6; frame++){
 			playerUp.addFrame(walk_U.getSprite(frame, 1), 10000); // 150 time in ms
 		}
-		for (int frame = 0; frame < 3; frame++){
+		for (int frame = 0; frame < 6; frame++){
 			playerDown.addFrame(walk_D.getSprite(frame, 1), 10000); // 150 time in ms
 		}
 		for (int frame = 0; frame < 7; frame++){
