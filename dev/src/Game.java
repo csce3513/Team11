@@ -83,8 +83,10 @@ public class Game extends BasicGame {
     	life3 = new Image("data/front.png");
     	
 		container.setVSync(true);  //display syncs with vertical refresh
-		SpriteSheet walk_D = new SpriteSheet("data/usablespritesheet.png", 48, 48); //player location
-		SpriteSheet walk_L = new SpriteSheet("data/L_sidetexture.png", 48, 48); //player location
+		SpriteSheet walk_D = new SpriteSheet("data/Front/frontmove2.png", 48, 62); //player location
+		SpriteSheet walk_L = new SpriteSheet("data/L_side/L_sidetexture.png", 48, 48); //player location
+		SpriteSheet walk_R = new SpriteSheet("data/L_side/R_sidetexture.png", 48, 62);
+		SpriteSheet walk_U = new SpriteSheet("data/Back/backmove.png", 48, 62);
 		SpriteSheet enemySheet = new SpriteSheet(enemyRef, 32, 32); //enemy reference
 		map = new BlockMap("data/map1.tmx"); //map location
 		
@@ -114,13 +116,13 @@ public class Game extends BasicGame {
 			playerNoMove.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
 		}
 		for (int frame = 0; frame < 3; frame++){
-			playerRight.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
+			playerRight.addFrame(walk_R.getSprite(frame, 1), 10000); // 150 time in ms
 		}
 		for (int frame = 0; frame < 3; frame++){
-			playerUp.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
+			playerUp.addFrame(walk_U.getSprite(frame, 1), 10000); // 150 time in ms
 		}
 		for (int frame = 0; frame < 3; frame++){
-			playerDown.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
+			playerDown.addFrame(walk_D.getSprite(frame, 1), 10000); // 150 time in ms
 		}
 		for (int frame = 0; frame < 7; frame++){
 			playerLeft.addFrame(walk_L.getSprite(frame, 0), 10000); // 150 time in ms
