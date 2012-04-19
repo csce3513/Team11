@@ -11,7 +11,11 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Polygon;
  
 public class Game extends BasicGame {
-	
+	SpriteSheet walk_L;
+	SpriteSheet walk_R;
+	SpriteSheet walk_U;
+	SpriteSheet walk_D;
+	SpriteSheet walk_Main;
 	Image cross1, cross2, cross3, cross4, cross5;
     Image life1, life2, life3;
     Image StatusPanel;
@@ -36,6 +40,11 @@ public class Game extends BasicGame {
 	//private TiledMap map;
 	
 	private Animation player;
+	private Animation playerNoMove;
+	private Animation playerLeft;
+	private Animation playerRight;
+	private Animation playerUp;
+	private Animation playerDown;
 	private Animation enemy;
 	private Animation arrow;
 	
@@ -61,6 +70,8 @@ public class Game extends BasicGame {
 		numLives = 3;
 		gameover = new Image("data/gameover.png");
 		menu = new Image("data/titlescreen.png");
+		
+		//Instantiate objects for Health Status bar
 		StatusPanel = new Image("data/StatusPanel.png");
 		cross1 = new Image("data/RedCross.png");
     	cross2 = new Image("data/RedCross.png");
@@ -70,30 +81,55 @@ public class Game extends BasicGame {
     	life1 = new Image("data/front.png");
     	life2 = new Image("data/front.png");
     	life3 = new Image("data/front.png");
-    	empty = new Image("data/empty.png");
+    	
 		container.setVSync(true);  //display syncs with vertical refresh
-		SpriteSheet sheet = new SpriteSheet("data/L_sidetexture.png", 48, 48); //player location
+		SpriteSheet walk_D = new SpriteSheet("data/usablespritesheet.png", 48, 48); //player location
+		SpriteSheet walk_L = new SpriteSheet("data/L_sidetexture.png", 48, 48); //player location
 		SpriteSheet enemySheet = new SpriteSheet(enemyRef, 32, 32); //enemy reference
 		map = new BlockMap("data/map1.tmx"); //map location
+		
+		//Instantiate different Player animations (depending on what direction he's headed)
 		player = new Animation();
-		//player.setAutoUpdate(true);
 		player.setSpeed(playerSpeed);
+		playerNoMove = new Animation();
+		playerNoMove.setSpeed(playerSpeed);
+		playerLeft = new Animation();
+		playerLeft.setSpeed(playerSpeed);
+		playerRight = new Animation();
+		playerRight.setSpeed(playerSpeed);
+		playerUp = new Animation();
+		playerUp.setSpeed(playerSpeed);
+		playerDown = new Animation();
+		playerDown.setSpeed(playerSpeed);
 		enemy = new Animation();
 		arrow = new Animation();
-		//enemy.setAutoUpdate(true);
+		walk_Main = walk_D;
+		enemy.setAutoUpdate(true);
 		
-		
-		//movement animation
-		// PLAYER
-		for (int frame = 0; frame < 7; frame++){
-			player.addFrame(sheet.getSprite(frame, 0), 10000); // 150 time in ms
+		//Fill each player instance with frames from their respective sprite sheets (still need additional sprite sheets)
+		for (int frame = 0; frame < 1; frame++){
+			player.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
 		}
-		
+		for (int frame = 0; frame < 1; frame++){
+			playerNoMove.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
+		}
+		for (int frame = 0; frame < 3; frame++){
+			playerRight.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
+		}
+		for (int frame = 0; frame < 3; frame++){
+			playerUp.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
+		}
+		for (int frame = 0; frame < 3; frame++){
+			playerDown.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
+		}
+		for (int frame = 0; frame < 7; frame++){
+			playerLeft.addFrame(walk_L.getSprite(frame, 0), 10000); // 150 time in ms
+		}
 		playerPoly = new Polygon(new float[]{
-											 playerX, playerY,
-											 playerX+32, playerY,
-											 playerX+32, playerY+44,
-											 playerX, playerY+44
+				 playerX, playerY,
+				 playerX+32, playerY,
+				 playerX+32, playerY+44,
+				 playerX, playerY+44
 		});	
 		// ENEMIES
 		for (int frame = 0; frame < 2; frame++){
@@ -105,10 +141,8 @@ public class Game extends BasicGame {
 				 enemyX+32, enemyY,
 				 enemyX+32, enemyY+32,
 				 enemyX, enemyY+32
-});	
+        });	
 	}
-	
-	
 	
 	public void update(GameContainer container, int delta) 
 	{ 	
@@ -135,15 +169,14 @@ public class Game extends BasicGame {
 		}
 			
 		if ((container.getInput().isKeyDown(Input.KEY_LEFT)) || (container.getInput().isKeyDown(Input.KEY_A))){
+			    player = playerLeft;
 				playerX--;
-				//enemyX++;
 				playerPoly.setX(playerX);
-				//enemyPoly.setX(enemyX);
-			}
+		}
 				try {
 					if (entityCollisionWith()){
 						playerX++;
-						playerPoly.setX(playerX);
+           				playerPoly.setX(playerX);
 					}
 					if (enemyCollisionWith()){
 						enemyX--;
@@ -162,13 +195,11 @@ public class Game extends BasicGame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			
 		
 		if ((container.getInput().isKeyDown(Input.KEY_RIGHT)) || (container.getInput().isKeyDown(Input.KEY_D))) {
+			player = playerRight;
 			playerX++;
-			//enemyX--;
 			playerPoly.setX(playerX);
-			//enemyPoly.setX(enemyX);
 			try {
 				if (entityCollisionWith()){
 					playerX--;
@@ -192,10 +223,9 @@ public class Game extends BasicGame {
 			}
 		}
 		if ((container.getInput().isKeyDown(Input.KEY_UP)) || (container.getInput().isKeyDown(Input.KEY_W))){
+			player = playerUp;
 			playerY--;
-			//enemyY++;
 			playerPoly.setY(playerY);
-			//enemyPoly.setY(enemyY);
 			try {
 				if (entityCollisionWith()){
 					playerY++;
@@ -219,10 +249,9 @@ public class Game extends BasicGame {
 			}
 		}
 		if ((container.getInput().isKeyDown(Input.KEY_DOWN)) || (container.getInput().isKeyDown(Input.KEY_S))){
+			player = playerDown;
 			playerY++;
-			//enemyY--;
 			playerPoly.setY(playerY);
-			//enemyPoly.setY(enemyY);
 			try {
 				if (entityCollisionWith()){
 					playerY--;
@@ -258,7 +287,6 @@ public class Game extends BasicGame {
 		
 		enemyX = enemyX++;
 		enemyPoly.setX(enemyX);
-		
 	}
 	
 	public boolean battle() throws SlickException{
