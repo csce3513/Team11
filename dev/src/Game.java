@@ -46,6 +46,8 @@ public class Game extends BasicGame {
 	private Animation playerUp;
 	private Animation playerDown;
 	private Animation enemy;
+	private Animation boss;
+	private Animation nullAnimation = null;
 	
 	private Polygon playerPoly;
 	private Polygon enemyPoly;
@@ -185,10 +187,12 @@ public class Game extends BasicGame {
 						enemyPoly.setX(enemyX);
 					}
 					if (battle()){
+		
 						playerX += 20;
 						playerPoly.setX(playerX + 20);
 						enemyX--;
-						enemyPoly.setX(enemyX);
+						enemyPoly.setX(enemyX); 
+						//enemyPoly.setClosed(true);
 						numCrosses--;
 						enemyDead = true;
 					}
@@ -224,6 +228,7 @@ public class Game extends BasicGame {
 				e.printStackTrace();
 			}
 		}
+		
 		if ((container.getInput().isKeyDown(Input.KEY_UP)) || (container.getInput().isKeyDown(Input.KEY_W))){
 			player = playerUp;
 			playerY--;
