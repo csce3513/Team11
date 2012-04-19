@@ -46,7 +46,6 @@ public class Game extends BasicGame {
 	private Animation playerUp;
 	private Animation playerDown;
 	private Animation enemy;
-	private Animation arrow;
 	
 	private Polygon playerPoly;
 	private Polygon enemyPoly;
@@ -104,7 +103,6 @@ public class Game extends BasicGame {
 		playerDown = new Animation();
 		playerDown.setSpeed(playerSpeed);
 		enemy = new Animation();
-		arrow = new Animation();
 		walk_Main = walk_D;
 		enemy.setAutoUpdate(true);
 		
@@ -115,13 +113,13 @@ public class Game extends BasicGame {
 		for (int frame = 0; frame < 1; frame++){
 			playerNoMove.addFrame(walk_Main.getSprite(frame, 1), 10000); // 150 time in ms
 		}
-		for (int frame = 0; frame < 7; frame++){
+		for (int frame = 0; frame < 3; frame++){
 			playerRight.addFrame(walk_R.getSprite(frame, 1), 10000); // 150 time in ms
 		}
-		for (int frame = 0; frame < 7; frame++){
+		for (int frame = 0; frame < 3; frame++){
 			playerUp.addFrame(walk_U.getSprite(frame, 1), 10000); // 150 time in ms
 		}
-		for (int frame = 0; frame < 6; frame++){
+		for (int frame = 0; frame < 3; frame++){
 			playerDown.addFrame(walk_D.getSprite(frame, 1), 10000); // 150 time in ms
 		}
 		for (int frame = 0; frame < 7; frame++){
@@ -175,6 +173,8 @@ public class Game extends BasicGame {
 				playerX--;
 				playerPoly.setX(playerX);
 		}
+		else
+			player = playerNoMove;
 				try {
 					if (entityCollisionWith()){
 						playerX++;
@@ -250,6 +250,7 @@ public class Game extends BasicGame {
 				e.printStackTrace();
 			}
 		}
+		
 		if ((container.getInput().isKeyDown(Input.KEY_DOWN)) || (container.getInput().isKeyDown(Input.KEY_S))){
 			player = playerDown;
 			playerY++;
