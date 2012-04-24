@@ -20,6 +20,10 @@ public class Game extends BasicGame {
 	SpriteSheet stop_R;
 	SpriteSheet stop_U;
 	SpriteSheet stop_D;
+	SpriteSheet attack_U;
+	SpriteSheet attack_D;
+	SpriteSheet attack_L;
+	SpriteSheet attack_R;
 	Image cross1, cross2, cross3, cross4, cross5;
     Image life1, life2, life3;
     Image StatusPanel;
@@ -55,10 +59,10 @@ public class Game extends BasicGame {
 	private Animation enemy;
 	private Animation boss;
 	private Animation nullAnimation = null;
-	private Animation attackleft;
-	private Animation attackright;
-	private Animation attackup;
-	private Animation attackdown;
+	private Animation attackLeft;
+	private Animation attackRight;
+	private Animation attackUp;
+	private Animation attackDown;
 	
 	private Polygon playerPoly;
 	private Polygon enemyPoly;
@@ -98,6 +102,12 @@ public class Game extends BasicGame {
     	SpriteSheet stopU = new SpriteSheet("data/Standing/up.png", 47, 62);
     	SpriteSheet stopL = new SpriteSheet("data/Standing/left.png", 47, 62);
     	SpriteSheet stopR = new SpriteSheet("data/Standing/right.png", 47, 62);
+    	
+    	SpriteSheet attack_D = new SpriteSheet("data/Attack/frontattack.png", 50, 63);
+    	SpriteSheet attack_U = new SpriteSheet("data/Attack/backattack.png", 60, 63);
+    	
+    	SpriteSheet attack_R = new SpriteSheet("data/Attack/rightattack.png", 56, 63);
+    	SpriteSheet attack_L = new SpriteSheet("data/Attack/leftattack.png", 54, 63);
     	// Karl
 		container.setVSync(true);  //display syncs with vertical refresh
 		SpriteSheet walk_D = new SpriteSheet("data/Front/frontmove2.png", 47, 62); //player location
@@ -121,14 +131,14 @@ public class Game extends BasicGame {
 		playerDown = new Animation();
 		playerDown.setSpeed(playerSpeed);
 		// Karl
-		attackleft = new Animation();
-		attackleft.setSpeed(playerSpeed);
-		attackright = new Animation();
-		attackright.setSpeed(playerSpeed);
-		attackup = new Animation();
-		attackup.setSpeed(playerSpeed);		
-		attackdown = new Animation();
-		attackdown.setSpeed(playerSpeed);
+		attackLeft = new Animation();
+		attackLeft.setSpeed(playerSpeed);
+		attackRight = new Animation();
+		attackRight.setSpeed(playerSpeed);
+		attackUp = new Animation();
+		attackUp.setSpeed(playerSpeed);		
+		attackDown = new Animation();
+		attackDown.setSpeed(playerSpeed);
 		
 		up = new Animation();
 		up.setSpeed(playerSpeed);
@@ -154,6 +164,22 @@ public class Game extends BasicGame {
 		for (int frame = 0; frame < 1; frame++){
 			up.addFrame(stopU.getSprite(frame, 1), 12100); // 150 time in ms
 		}
+		
+		// ATTACK
+		for (int frame = 0; frame < 4; frame++){
+			attackLeft.addFrame(attack_L.getSprite(frame, 1), 12100); // 150 time in ms
+		}
+		for (int frame = 0; frame < 4; frame++){
+			attackRight.addFrame(attack_R.getSprite(frame, 1), 12100); // 150 time in ms
+		}
+		for (int frame = 0; frame < 4; frame++){
+			attackUp.addFrame(attack_U.getSprite(frame, 1), 12100); // 150 time in ms
+		}
+		for (int frame = 0; frame < 4; frame++){
+			attackDown.addFrame(attack_D.getSprite(frame, 1), 12100); // 150 time in ms
+		}
+		// ATTACK
+		
 		for (int frame = 0; frame < 1; frame++){
 			down.addFrame(stopD.getSprite(frame, 1), 12100); // 150 time in ms
 		}
@@ -317,22 +343,38 @@ public class Game extends BasicGame {
 				e.printStackTrace();
 			}
 		}
-		
-		if ((container.getInput().isKeyDown(Input.KEY_DOWN)) || (container.getInput().isKeyDown(Input.KEY_S))){
+		if ((container.getInput().isKeyDown(Input.KEY_SPACE)))
+		{
+			
+			if(direction.equals("down"))
+			player = attackDown;
+			if(direction.equals("up"))
+			player = attackUp;
+			if(direction.equals("left"))
+			player = attackLeft;
+			if(direction.equals("right"))
+			player = attackRight;
+		}
+		if ((container.getInput().isKeyDown(Input.KEY_DOWN)) || (container.getInput().isKeyDown(Input.KEY_S)))
+		{
 			player = playerDown;
 			playerY++;
 			direction = "down";
 			playerPoly.setY(playerY);
-			try {
-				if (entityCollisionWith()){
+			try 
+			{
+				if (entityCollisionWith())
+				{
 					playerY--;
 					playerPoly.setY(playerY);
 				}
-				if (enemyCollisionWith()){
+				if (enemyCollisionWith())
+				{
 					enemyY++;
 					enemyPoly.setY(enemyY);
 				}
-				if (battle()){
+				if (battle())
+				{
 					playerY -= 20;
 					playerPoly.setY(playerY);
 					enemyY++;
@@ -345,20 +387,24 @@ public class Game extends BasicGame {
 				e.printStackTrace();
 			}
 		}
-		
-		try {
-			if (battle()){
+		try 
+		{
+			if (battle())
+			{
+				
 //				System.out.println("BATTLE");
 				
 			}
-		} catch (SlickException e) {
+		} catch (SlickException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 //		System.out.println(direction); // KARL DEBUG
 		enemyX = enemyX++;
 		enemyPoly.setX(enemyX);
-	}
+		}
+
 	
 	public boolean battle() throws SlickException{
 			if (enemyPoly.intersects(playerPoly)){
