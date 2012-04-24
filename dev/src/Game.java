@@ -16,6 +16,10 @@ public class Game extends BasicGame {
 	SpriteSheet walk_U;
 	SpriteSheet walk_D;
 	SpriteSheet walk_Main;
+	SpriteSheet stop_L;
+	SpriteSheet stop_R;
+	SpriteSheet stop_U;
+	SpriteSheet stop_D;
 	Image cross1, cross2, cross3, cross4, cross5;
     Image life1, life2, life3;
     Image StatusPanel;
@@ -23,6 +27,9 @@ public class Game extends BasicGame {
     Image menu;
     Image gameover;
     Image startButton;
+    
+    
+    
     int menuState;
     String enemyRef = "data/enemies.png";
 	int numCrosses;
@@ -38,7 +45,7 @@ public class Game extends BasicGame {
 	
 	//map using Tiled
 	//private TiledMap map;
-	
+	private Animation up, down, left, right;
 	private Animation player;
 	private Animation playerNoMove;
 	private Animation playerLeft;
@@ -48,10 +55,14 @@ public class Game extends BasicGame {
 	private Animation enemy;
 	private Animation boss;
 	private Animation nullAnimation = null;
+	private Animation attackleft;
+	private Animation attackright;
+	private Animation attackup;
+	private Animation attackdown;
 	
 	private Polygon playerPoly;
 	private Polygon enemyPoly;
-	
+	String direction = "null"; // Karl
 	public BlockMap map;
  
 	public Game() {
@@ -82,7 +93,12 @@ public class Game extends BasicGame {
     	life1 = new Image("data/front.png");
     	life2 = new Image("data/front.png");
     	life3 = new Image("data/front.png");
-    	
+    	// Karl
+    	SpriteSheet stopD = new SpriteSheet("data/Standing/down.png", 47, 62);
+    	SpriteSheet stopU = new SpriteSheet("data/Standing/up.png", 47, 62);
+    	SpriteSheet stopL = new SpriteSheet("data/Standing/left.png", 47, 62);
+    	SpriteSheet stopR = new SpriteSheet("data/Standing/right.png", 47, 62);
+    	// Karl
 		container.setVSync(true);  //display syncs with vertical refresh
 		SpriteSheet walk_D = new SpriteSheet("data/Front/frontmove2.png", 47, 62); //player location
 		SpriteSheet walk_L = new SpriteSheet("data/L_side/L_sidetexture.png", 47, 48); //player location
@@ -104,6 +120,26 @@ public class Game extends BasicGame {
 		playerUp.setSpeed(playerSpeed);
 		playerDown = new Animation();
 		playerDown.setSpeed(playerSpeed);
+		// Karl
+		attackleft = new Animation();
+		attackleft.setSpeed(playerSpeed);
+		attackright = new Animation();
+		attackright.setSpeed(playerSpeed);
+		attackup = new Animation();
+		attackup.setSpeed(playerSpeed);		
+		attackdown = new Animation();
+		attackdown.setSpeed(playerSpeed);
+		
+		up = new Animation();
+		up.setSpeed(playerSpeed);
+		down = new Animation();
+		down.setSpeed(playerSpeed);
+		left = new Animation();
+		left.setSpeed(playerSpeed);
+		right = new Animation();
+		right.setSpeed(playerSpeed);
+		
+		// Karl
 		enemy = new Animation();
 		walk_Main = walk_D;
 		enemy.setAutoUpdate(true);
@@ -114,6 +150,18 @@ public class Game extends BasicGame {
 		}
 		for (int frame = 0; frame < 1; frame++){
 			playerNoMove.addFrame(walk_Main.getSprite(frame, 1), 12100); // 150 time in ms
+		}
+		for (int frame = 0; frame < 1; frame++){
+			up.addFrame(stopU.getSprite(frame, 1), 12100); // 150 time in ms
+		}
+		for (int frame = 0; frame < 1; frame++){
+			down.addFrame(stopD.getSprite(frame, 1), 12100); // 150 time in ms
+		}
+		for (int frame = 0; frame < 1; frame++){
+			left.addFrame(stopL.getSprite(frame, 1), 12100); // 150 time in ms
+		}
+		for (int frame = 0; frame < 1; frame++){
+			right.addFrame(stopR.getSprite(frame, 1), 12100); // 150 time in ms
 		}
 		for (int frame = 0; frame < 8; frame++){
 			playerRight.addFrame(walk_R.getSprite(frame, 1), 11100); // 150 time in ms
@@ -169,14 +217,26 @@ public class Game extends BasicGame {
 		{
 			menuState = 1;
 		}
-			
+		
 		if ((container.getInput().isKeyDown(Input.KEY_LEFT)) || (container.getInput().isKeyDown(Input.KEY_A))){
 			    player = playerLeft;
 				playerX--;
+				direction = "left";
 				playerPoly.setX(playerX);
 		}
 		else
 			player = playerNoMove;
+		// Karl
+		if(direction.equals("up"))
+				playerNoMove = up;
+		if(direction.equals("down"))
+				playerNoMove = down;
+		if(direction.equals("left"))
+				playerNoMove = left;
+		if(direction.equals("right"))
+				playerNoMove = right;
+		// Karl
+		
 				try {
 					if (entityCollisionWith()){
 						playerX++;
@@ -205,6 +265,7 @@ public class Game extends BasicGame {
 		if ((container.getInput().isKeyDown(Input.KEY_RIGHT)) || (container.getInput().isKeyDown(Input.KEY_D))) {
 			player = playerRight;
 			playerX++;
+			direction = "right";
 			playerPoly.setX(playerX);
 			try {
 				if (entityCollisionWith()){
@@ -232,6 +293,7 @@ public class Game extends BasicGame {
 		if ((container.getInput().isKeyDown(Input.KEY_UP)) || (container.getInput().isKeyDown(Input.KEY_W))){
 			player = playerUp;
 			playerY--;
+			direction = "up";
 			playerPoly.setY(playerY);
 			try {
 				if (entityCollisionWith()){
@@ -259,6 +321,7 @@ public class Game extends BasicGame {
 		if ((container.getInput().isKeyDown(Input.KEY_DOWN)) || (container.getInput().isKeyDown(Input.KEY_S))){
 			player = playerDown;
 			playerY++;
+			direction = "down";
 			playerPoly.setY(playerY);
 			try {
 				if (entityCollisionWith()){
@@ -285,14 +348,14 @@ public class Game extends BasicGame {
 		
 		try {
 			if (battle()){
-				System.out.println("BATTLE");
+//				System.out.println("BATTLE");
 				
 			}
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+//		System.out.println(direction); // KARL DEBUG
 		enemyX = enemyX++;
 		enemyPoly.setX(enemyX);
 	}
