@@ -23,6 +23,7 @@ public class Game extends BasicGame {
 	SpriteSheet attack_D;
 	SpriteSheet attack_L;
 	SpriteSheet attack_R;
+	SpriteSheet enemySheet;
 	Image cross1, cross2, cross3, cross4, cross5;
     Image life1, life2, life3;
     Image StatusPanel;
@@ -113,11 +114,11 @@ public class Game extends BasicGame {
     	SpriteSheet attack_L = new SpriteSheet("data/Attack/leftattack.png", 54, 63);
     	// Karl
 		container.setVSync(true);  //display syncs with vertical refresh
-		SpriteSheet walk_D = new SpriteSheet("data/Front/frontmove2.png", 47, 62); //player location
-		SpriteSheet walk_L = new SpriteSheet("data/L_side/L_sidetexture.png", 47, 48); //player location
-		SpriteSheet walk_R = new SpriteSheet("data/L_side/R_sidetexture.png", 47, 62);
-		SpriteSheet walk_U = new SpriteSheet("data/Back/backmove.png", 47, 62);
-		SpriteSheet enemySheet = new SpriteSheet(enemyRef, 32, 32); //enemy reference
+		walk_D = new SpriteSheet("data/Front/frontmove2.png", 47, 62); //player location
+		walk_L = new SpriteSheet("data/L_side/L_sidetexture.png", 47, 48); //player location
+		walk_R = new SpriteSheet("data/L_side/R_sidetexture.png", 47, 62);
+		walk_U = new SpriteSheet("data/Back/backmove.png", 47, 62);
+		enemySheet = new SpriteSheet(enemyRef, 32, 32); //enemy reference
 		map = new BlockMap("data/map1.tmx"); //map location
 		
 		//Instantiate different Player animations (depending on what direction he's headed)
