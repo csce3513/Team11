@@ -30,9 +30,9 @@ public class Game extends BasicGame {
     Image menu;
     Image gameover;
     Image startButton;
-    
-    
-    
+    Image dieScreen;
+    Image tutorial;
+    boolean restart;
     int menuState;
     String enemyRef = "data/enemies.png";
 	int numCrosses;
@@ -74,6 +74,7 @@ public class Game extends BasicGame {
 	
 	
 	public void init(GameContainer container) throws SlickException {
+		restart = false;
 		directionX = 1;
 		enemyX = 32;
 		enemyY = 32;
@@ -83,9 +84,10 @@ public class Game extends BasicGame {
 		menuState = 0;
 		numCrosses = 5;
 		numLives = 3;
-		gameover = new Image("data/gameover.png");
+		gameover = new Image("data/gameover_screen_white.png");
 		menu = new Image("data/titlescreen.png");
-		
+		dieScreen = new Image("data/deadZ.png");
+		tutorial = new Image("data/Tutorial.png");
 		//Instantiate objects for Health Status bar
 		StatusPanel = new Image("data/StatusPanel.png");
 		cross1 = new Image("data/RedCross.png");
@@ -238,7 +240,19 @@ public class Game extends BasicGame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		if(container.getInput().isKeyDown(Input.KEY_N))
+		if (container.getInput().isKeyPressed(Input.KEY_T))
+		{
+			menuState = 3;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_ENTER))
+		{
+			restart = true;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_M))
+		{
+			menuState = 0;
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_SPACE))
 		{
 			menuState = 1;
 		}
@@ -444,7 +458,28 @@ public class Game extends BasicGame {
 	public void render(GameContainer container, Graphics g)  {
 		
 	menu.draw();
-	
+	if(restart == true)
+	{
+		//game is reinitialized so that it's ready for a new game.
+		try 
+		{
+			container.reinit();
+		} 
+		catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		restart = false;
+	}
+	if(menuState == 3)
+	{
+		tutorial.draw();
+	}
+	if(menuState == 2)
+	{
+		dieScreen.draw();
+		
+	}
 	if(menuState == 1) // when 'n' is pressed menuState becomes = 1
 	{
 		BlockMap.tmap.render(0, 0);
@@ -495,6 +530,7 @@ public class Game extends BasicGame {
 			//numCrosses = 5;
 			numLives--;
 			numCrosses = 5;
+			menuState = 2;
 		}
 		else
 			numCrosses = 5;
@@ -518,16 +554,6 @@ public class Game extends BasicGame {
 		if( numLives == 0)
 		{
 			gameover.draw(); //game over screen is displayed when numLives = 0
-			
-			/*game is reinitialized so that it's ready for a new game.
-			try 
-			{
-				container.reinit();
-			} 
-			catch (SlickException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 		}
 	}
     
