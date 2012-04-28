@@ -33,6 +33,7 @@ public class Game extends BasicGame {
     Image dieScreen;
     Image tutorial;
     boolean restart;
+    boolean quit;
     int menuState;
     String enemyRef = "data/enemies.png";
 	int numCrosses;
@@ -75,6 +76,7 @@ public class Game extends BasicGame {
 	
 	public void init(GameContainer container) throws SlickException {
 		restart = false;
+		quit = false;
 		directionX = 1;
 		enemyX = 32;
 		enemyY = 32;
@@ -239,6 +241,10 @@ public class Game extends BasicGame {
 		} catch (SlickException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}
+		if (container.getInput().isKeyPressed(Input.KEY_Q))
+		{
+			quit = true;
 		}
 		if (container.getInput().isKeyPressed(Input.KEY_T))
 		{
@@ -458,6 +464,10 @@ public class Game extends BasicGame {
 	public void render(GameContainer container, Graphics g)  {
 		
 	menu.draw();
+	if(quit == true)
+	{
+		container.exit();
+	}
 	if(restart == true)
 	{
 		//game is reinitialized so that it's ready for a new game.
