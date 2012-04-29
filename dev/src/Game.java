@@ -8,8 +8,9 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Polygon;
- 
+import java.util.*;
 public class Game extends BasicGame {
+	Enemy enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10;
 	SpriteSheet walk_L;
 	SpriteSheet walk_R;
 	SpriteSheet walk_U;
@@ -69,6 +70,10 @@ public class Game extends BasicGame {
 	private Polygon enemyPoly;
 	String direction = "null"; // Karl
 	public BlockMap map;
+	
+	//experimenting with ArrayList of enemies
+	private Enemy[] theEnemies = {enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10};
+	private List<Enemy> enemyList;
  
 	public Game() {
 		super("Son of Z"); //name in window
@@ -76,6 +81,19 @@ public class Game extends BasicGame {
 	
 	
 	public void init(GameContainer container) throws SlickException {
+		enemyList = new ArrayList<Enemy>();
+		//Adding enemies to ArrayList
+    	enemyList.add(enemy1);
+		enemyList.add(enemy2);
+		enemyList.add(enemy3);
+		enemyList.add(enemy4);
+		enemyList.add(enemy5);
+		enemyList.add(enemy6);
+		enemyList.add(enemy7);
+		enemyList.add(enemy8);
+		enemyList.add(enemy9);
+		enemyList.add(enemy10);
+	 
 		restart = false;
 		quit = false;
 		directionX = 1;

@@ -38,6 +38,7 @@ public class Enemy {
 		return sprite;
 	}
 	public void setSpriteSheet(SpriteSheet s)
+	
 	{
 		sprite = s;
 	}
