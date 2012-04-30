@@ -9,7 +9,15 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Polygon;
 import java.util.*;
+import java.util.Iterator;
+
 public class Game extends BasicGame {
+	int n = 400;
+	int m = 500;
+	Random generator1 = new Random();
+	Random generator2 = new Random();
+	int randomIndex_X = generator1.nextInt( n );
+	int randomIndex_Y = generator2.nextInt( m );
 	Enemy enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10;
 	SpriteSheet walk_L;
 	SpriteSheet walk_R;
@@ -72,6 +80,7 @@ public class Game extends BasicGame {
 	public BlockMap map;
 	
 	//experimenting with ArrayList of enemies
+	private Enemy badDude;
 	private Enemy[] theEnemies = {enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10};
 	private List<Enemy> enemyList;
  
@@ -81,6 +90,18 @@ public class Game extends BasicGame {
 	
 	
 	public void init(GameContainer container) throws SlickException {
+		
+		//badDude = new Enemy(randomIndex_X, randomIndex_Y);
+		enemy1 = new Enemy(30, 30);
+		enemy2 = new Enemy(30, 60);
+		enemy3 = new Enemy(30, 90);
+		enemy4 = new Enemy(30, 120);
+		enemy5 = new Enemy(30, 150);
+		enemy6 = new Enemy(30, 180);
+		enemy7 = new Enemy(30, 210);
+		enemy8 = new Enemy(30, 240);
+		enemy9 = new Enemy(30, 270);
+		enemy10 = new Enemy(30, 300);
 		enemyList = new ArrayList<Enemy>();
 		//Adding enemies to ArrayList
     	enemyList.add(enemy1);
@@ -120,16 +141,14 @@ public class Game extends BasicGame {
     	life2 = new Image("data/front.png");
     	life3 = new Image("data/front.png");
     	// Karl
-    	SpriteSheet stopD = new SpriteSheet("data/Standing/down.png", 47, 62);
-    	SpriteSheet stopU = new SpriteSheet("data/Standing/up.png", 47, 62);
-    	SpriteSheet stopL = new SpriteSheet("data/Standing/left.png", 47, 62);
-    	SpriteSheet stopR = new SpriteSheet("data/Standing/right.png", 47, 62);
-    	
-    	SpriteSheet attack_D = new SpriteSheet("data/Attack/frontattack.png", 50, 63);
-    	SpriteSheet attack_U = new SpriteSheet("data/Attack/backattack.png", 60, 63);
-    	
-    	SpriteSheet attack_R = new SpriteSheet("data/Attack/rightattack.png", 56, 63);
-    	SpriteSheet attack_L = new SpriteSheet("data/Attack/leftattack.png", 54, 63);
+    	stop_D = new SpriteSheet("data/Standing/down.png", 47, 62);
+    	stop_U = new SpriteSheet("data/Standing/up.png", 47, 62);
+    	stop_L = new SpriteSheet("data/Standing/left.png", 47, 62);
+    	stop_R = new SpriteSheet("data/Standing/right.png", 47, 62);
+    	attack_D = new SpriteSheet("data/Attack/frontattack.png", 50, 63);
+    	attack_U = new SpriteSheet("data/Attack/backattack.png", 60, 63);
+    	attack_R = new SpriteSheet("data/Attack/rightattack.png", 56, 63);
+    	attack_L = new SpriteSheet("data/Attack/leftattack.png", 54, 63);
     	// Karl
 		container.setVSync(true);  //display syncs with vertical refresh
 		walk_D = new SpriteSheet("data/Front/frontmove2.png", 47, 62); //player location
@@ -178,50 +197,50 @@ public class Game extends BasicGame {
 		
 		//Fill each player instance with frames from their respective sprite sheets (still need additional sprite sheets)
 		for (int frame = 0; frame < 1; frame++){
-			player.addFrame(walk_Main.getSprite(frame, 1), 12100); // 150 time in ms
+			player.addFrame(walk_Main.getSprite(frame, 1), 12100); //
 		}
 		for (int frame = 0; frame < 1; frame++){
-			playerNoMove.addFrame(walk_Main.getSprite(frame, 1), 12100); // 150 time in ms
+			playerNoMove.addFrame(walk_Main.getSprite(frame, 1), 12100);
 		}
 		for (int frame = 0; frame < 1; frame++){
-			up.addFrame(stopU.getSprite(frame, 1), 12100); // 150 time in ms
+			up.addFrame(stop_U.getSprite(frame, 1), 12100);
 		}
 		
 		// ATTACK
 		for (int frame = 0; frame < 4; frame++){
-			attackLeft.addFrame(attack_L.getSprite(frame, 1), 12100); // 150 time in ms
+			attackLeft.addFrame(attack_L.getSprite(frame, 1), 12100);
 		}
 		for (int frame = 0; frame < 4; frame++){
-			attackRight.addFrame(attack_R.getSprite(frame, 1), 12100); // 150 time in ms
+			attackRight.addFrame(attack_R.getSprite(frame, 1), 12100);
 		}
 		for (int frame = 0; frame < 4; frame++){
-			attackUp.addFrame(attack_U.getSprite(frame, 1), 12100); // 150 time in ms
+			attackUp.addFrame(attack_U.getSprite(frame, 1), 12100);
 		}
 		for (int frame = 0; frame < 4; frame++){
-			attackDown.addFrame(attack_D.getSprite(frame, 1), 12100); // 150 time in ms
+			attackDown.addFrame(attack_D.getSprite(frame, 1), 12100);
 		}
 		// ATTACK
 		
 		for (int frame = 0; frame < 1; frame++){
-			down.addFrame(stopD.getSprite(frame, 1), 12100); // 150 time in ms
+			down.addFrame(stop_D.getSprite(frame, 1), 12100); 
 		}
 		for (int frame = 0; frame < 1; frame++){
-			left.addFrame(stopL.getSprite(frame, 1), 12100); // 150 time in ms
+			left.addFrame(stop_L.getSprite(frame, 1), 12100); 
 		}
 		for (int frame = 0; frame < 1; frame++){
-			right.addFrame(stopR.getSprite(frame, 1), 12100); // 150 time in ms
+			right.addFrame(stop_R.getSprite(frame, 1), 12100); 
 		}
 		for (int frame = 0; frame < 8; frame++){
-			playerRight.addFrame(walk_R.getSprite(frame, 1), 11100); // 150 time in ms
+			playerRight.addFrame(walk_R.getSprite(frame, 1), 11100); 
 		}
 		for (int frame = 0; frame < 7; frame++){
-			playerUp.addFrame(walk_U.getSprite(frame, 1), 11100); // 150 time in ms
+			playerUp.addFrame(walk_U.getSprite(frame, 1), 11100); 
 		}
 		for (int frame = 0; frame < 7; frame++){
-			playerDown.addFrame(walk_D.getSprite(frame, 1), 11100); // 150 time in ms
+			playerDown.addFrame(walk_D.getSprite(frame, 1), 11100); 
 		}
 		for (int frame = 0; frame < 8; frame++){
-			playerLeft.addFrame(walk_L.getSprite(frame, 0), 11100); // 150 time in ms
+			playerLeft.addFrame(walk_L.getSprite(frame, 0), 11100);
 		}
 		playerPoly = new Polygon(new float[]{
 				 playerX, playerY,
@@ -512,14 +531,22 @@ public class Game extends BasicGame {
 	if(menuState == 1) // when 'n' is pressed menuState becomes = 1
 	{
 		BlockMap.tmap.render(0, 0);
+	    //badDude.getAnimation.draw(badDude.getX(), badDude.getY());
 		g.drawAnimation(player, playerX, playerY);
 		//if(enemyDead == false)
 		//{
 			g.drawAnimation(enemy, enemyX, enemyY);
 		//}
-			
+		//g.drawAnimation(badDude.getAnimation(), randomIndex_X, randomIndex_Y);
 		//g.draw(enemyPoly);
 		//g.draw(playerPoly);
+		
+		Enemy s;
+	    Iterator e = enemyList.iterator();
+	    while (e.hasNext()) {
+	      s = (Enemy) e.next();
+	      g.drawAnimation(s.getAnimation(), s.getX(), s.getY());
+	    }
 		StatusPanel.draw(0, 480);
 		
 		//Draws the correct amount of red crosses after numCrosses is decremented when there is player enemy contact
