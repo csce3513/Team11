@@ -5,6 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
@@ -12,8 +13,10 @@ import org.newdawn.slick.geom.Polygon;
 import java.util.*;
 
 public class Game extends BasicGame {
-	Sound painful;
+	
 	Sound whish;
+	Sound painful;
+	Music theme;
 	SpriteSheet walk_L;
 	SpriteSheet walk_R;
 	SpriteSheet walk_U;
@@ -45,15 +48,10 @@ public class Game extends BasicGame {
 	int numLives;
 	float playerSpeed = 90;
 	boolean enemyDead;
-	//player start position
 	private float playerX;
 	private float playerY;
 	int directionX;
-	private float enemyX;
-	private float enemyY;
 	
-	//map using Tiled
-	//private TiledMap map;
 	private Animation up, down, left, right;
 	private Animation player;
 	private Animation playerNoMove;
@@ -63,14 +61,12 @@ public class Game extends BasicGame {
 	private Animation playerDown;
 	private Animation enemy;
 //	private Animation boss;
-//	private Animation nullAnimation = null;
 	private Animation attackLeft;
 	private Animation attackRight;
 	private Animation attackUp;
 	private Animation attackDown;
 	
 	private Polygon playerPoly;
-	private Polygon enemyPoly;
 	private Polygon playerAttackPoly;
 	String direction = "null"; // Karl
 	public BlockMap map;
@@ -115,8 +111,6 @@ public class Game extends BasicGame {
 		restart = false;
 		quit = false;
 		directionX = 1;
-		enemyX = 32;
-		enemyY = 32;
 		enemyDead = false;
 		playerX = 320;
 		playerY = 240;
@@ -192,7 +186,7 @@ public class Game extends BasicGame {
 		walk_Main = walk_D;
 		enemy.setAutoUpdate(true);
 		
-		//Fill each player instance with frames from their respective sprite sheets (still need additional sprite sheets)
+		//Fill each player instance with frames from their respective sprite sheets
 		for (int frame = 0; frame < 1; frame++){
 			player.addFrame(walk_Main.getSprite(frame, 1), 12100); //
 		}
@@ -253,18 +247,12 @@ public class Game extends BasicGame {
 		});	
 		// ENEMIES
 		for (int frame = 0; frame < 2; frame++){
-			enemy.addFrame(enemySheet.getSprite(frame, 0), 1);
+			enemy.addFrame(enemySheet.getSprite(frame, 0), 1000000000);
 		}
 		
-		enemyPoly = new Polygon(new float[]{
-				 enemyX, enemyY,
-				 enemyX+32, enemyY,
-				 enemyX+32, enemyY+32,
-				 enemyX, enemyY+32
-        });	
+		whish = new Sound("data/sounds/Whish.wav");
 		painful = new Sound("data/sounds/painful.wav");
-		whish = new Sound("data/sounds/Swoosh-Public_D-4.wav");
-		
+		//theme = new Music("");
 	}
 	
 	public void update(GameContainer container, int delta) 
@@ -485,18 +473,6 @@ public class Game extends BasicGame {
 			    	  }
 			      } 
 			    }
-				/*if (enemyCollision(enemy1)){
-					enemyY--;
-					enemyPoly.setY(enemyY);
-				}
-				if (battle()){
-					playerY += 20;
-					playerPoly.setY(playerY);
-					enemyY--;
-					enemyPoly.setY(enemyY);
-					numCrosses--;
-					enemyDead = true;
-				}*/
 			} catch (SlickException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -545,33 +521,14 @@ public class Game extends BasicGame {
 			    	  }
 			      } 
 			    }
-				/*if (enemyCollision(enemy1))
-				{
-					enemyY++;
-					enemyPoly.setY(enemyY);
-				}
-			    if (battle())
-				{
-					playerY -= 20;
-					playerPoly.setY(playerY);
-					enemyY++;
-					enemyPoly.setY(enemyY);
-					numCrosses--;
-					
-				}*/
 			} catch (SlickException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 		
-//		System.out.println(direction); // KARL DEBUG
-		/*enemyX = enemyX++;
-		enemyPoly.setX(enemyX);
-		*/ 
 		if ((container.getInput().isKeyDown(Input.KEY_SPACE)))
 		{
-			whish.play();
 			if(direction.equals("down"))
 			player = attackDown;
 			if(direction.equals("up"))
@@ -618,16 +575,12 @@ public class Game extends BasicGame {
 					
 		}
 	   return false;
-		
-	   /*if((container.getInput().mousePressed()))
-	   {
-		           // on this one I was trying to set it up so that when you press the mouse button the player shoots an arrow.
-	   }*/
 	}
 	
 	public void render(GameContainer container, Graphics g)  {
 		
 	menu.draw();
+	//theme.play();
 	if(quit == true)
 	{
 		container.exit();
@@ -657,16 +610,9 @@ public class Game extends BasicGame {
 	if(menuState == 1) // when 'n' is pressed menuState becomes = 1
 	{
 		BlockMap.tmap.render(0, 0);
-	    //badDude.getAnimation.draw(badDude.getX(), badDude.getY());
 		g.drawAnimation(player, playerX, playerY);
-		//if(enemyDead == false)
-		//{
-			//g.drawAnimation(enemy, enemyX, enemyY);
-		//}
-		//g.drawAnimation(badDude.getAnimation(), randomIndex_X, randomIndex_Y);
-		//g.draw(enemyPoly);
-		g.draw(playerPoly);
-		g.draw(playerAttackPoly);
+		//g.draw(playerPoly);
+		//g.draw(playerAttackPoly);
 		
 		Enemy s;
 	    Iterator<Enemy> e = enemyList.iterator();
