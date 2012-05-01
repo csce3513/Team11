@@ -86,7 +86,9 @@ public class Game extends BasicGame {
 	
 	public void init(GameContainer container) throws SlickException {
 		
-		
+		whish = new Sound("data/sounds/Whish.wav");
+		painful = new Sound("data/sounds/painful.wav");
+		injured = new Sound("data/sounds/Shot in face.wav");
 		//Initialize enemies at specific coords
 		enemy1 = new Enemy(30, 30);
 		enemy2 = new Enemy(30, 80);
@@ -252,12 +254,9 @@ public class Game extends BasicGame {
 		});	
 		// ENEMIES
 		for (int frame = 0; frame < 2; frame++){
-			enemy.addFrame(enemySheet.getSprite(frame, 0), 1000000000);
+			enemy.addFrame(enemySheet.getSprite(frame, 0), 10);
 		}
 		
-		whish = new Sound("data/sounds/Whish.wav");
-		painful = new Sound("data/sounds/painful.wav");
-		injured = new Sound("data/sounds/Shot in face.wav");
 		//theme = new Music("");
 	}
 	

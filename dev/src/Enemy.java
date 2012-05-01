@@ -15,7 +15,7 @@ public class Enemy {
 	private int x;
 	private int y;
 	private Animation animation;
-	private float ENEMYSPEED = 90;
+	private float ENEMYSPEED = 5;
 	private SpriteSheet sprite;
 	private Polygon poly;
 	private Polygon attackPoly;
@@ -49,7 +49,7 @@ public class Enemy {
 		} //enemy reference
 		animation = new Animation();
 		animation.setSpeed(ENEMYSPEED);
-		animation.setAutoUpdate(true);
+		//animation.setAutoUpdate(true);
 		for (int frame = 0; frame < 2; frame++){
 			animation.addFrame(sprite.getSprite(frame, 0), 755);
 		}
