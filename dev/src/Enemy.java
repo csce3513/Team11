@@ -18,6 +18,7 @@ public class Enemy {
 	private float ENEMYSPEED = 90;
 	private SpriteSheet sprite;
 	private Polygon poly;
+	private int directionX;
 
 	/* I haven't implemented this player class into the Game class yet. This is the basic start of the class. I'm still thinking about 
 	 * how we will utilize it so that I can add the correct methods.
@@ -27,6 +28,12 @@ public class Enemy {
 	{
 		this.x = x;
 		this.y = y;	
+		poly = new Polygon(new float[]{
+				 x, y,
+				 x + 32, y,
+				 x + 32, y + 32,
+				 x, y + 32
+       });	
 		try {
 			sprite = new SpriteSheet("data/enemies.png", 32, 32);
 		} catch (SlickException e) {
@@ -35,10 +42,11 @@ public class Enemy {
 		} //enemy reference
 		animation = new Animation();
 		animation.setSpeed(ENEMYSPEED);
+		animation.setAutoUpdate(true);
 		for (int frame = 0; frame < 2; frame++){
 			animation.addFrame(sprite.getSprite(frame, 0), 755);
 		}
-		//sprite = new Image("data/")
+		directionX = 1;
 	}
 	public int getX()
 	{
@@ -56,6 +64,14 @@ public class Enemy {
 	{
 		return sprite;
 	}
+	public int getDirectionX()
+	{
+		return directionX;
+	}
+	public Polygon getPoly()
+	{
+		return poly;
+	}
 	public void setSpriteSheet(SpriteSheet s)
 	
 	{
@@ -68,6 +84,18 @@ public class Enemy {
 	public void setY(int y)
 	{
 		this.y = y;
+	}
+	public void setDirectionX(int i)
+	{
+		directionX = i;
+	}
+	public void setPolyX(int x)
+	{
+		poly.setX(x);
+	}
+	public void setPolyY(int y)
+	{
+		poly.setY(y);
 	}
 	public void drawEnemy()
 	{
