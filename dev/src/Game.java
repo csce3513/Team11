@@ -6,11 +6,14 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Polygon;
 import java.util.*;
 
 public class Game extends BasicGame {
+	Sound painful;
+	Sound whish;
 	SpriteSheet walk_L;
 	SpriteSheet walk_R;
 	SpriteSheet walk_U;
@@ -84,7 +87,8 @@ public class Game extends BasicGame {
 	
 	public void init(GameContainer container) throws SlickException {
 		
-		//badDude = new Enemy(randomIndex_X, randomIndex_Y);
+		
+		//Initialize enemies at specific coords
 		enemy1 = new Enemy(30, 30);
 		enemy2 = new Enemy(30, 80);
 		enemy3 = new Enemy(30, 130);
@@ -236,20 +240,20 @@ public class Game extends BasicGame {
 			playerLeft.addFrame(walk_L.getSprite(frame, 0), 11100);
 		}
 		playerPoly = new Polygon(new float[]{
-				 playerX, playerY,
-				 playerX+32, playerY,
-				 playerX+32, playerY+44,
-				 playerX, playerY+44
+				 playerX + 5, playerY,
+				 playerX + 41, playerY,
+				 playerX + 41, playerY + 47,
+				 playerX + 5, playerY + 47
 		});	
 		playerAttackPoly = new Polygon(new float[]{
-				 playerX, playerY,
-				 playerX+45, playerY,
-				 playerX+45, playerY+55,
-				 playerX, playerY+55
+				 playerX - 20, playerY - 20,
+				 playerX + 60, playerY - 20,
+				 playerX + 60, playerY + 60,
+				 playerX - 20, playerY + 60
 		});	
 		// ENEMIES
 		for (int frame = 0; frame < 2; frame++){
-			enemy.addFrame(enemySheet.getSprite(frame, 0), 150);
+			enemy.addFrame(enemySheet.getSprite(frame, 0), 1);
 		}
 		
 		enemyPoly = new Polygon(new float[]{
@@ -258,6 +262,9 @@ public class Game extends BasicGame {
 				 enemyX+32, enemyY+32,
 				 enemyX, enemyY+32
         });	
+		painful = new Sound("data/sounds/painful.wav");
+		whish = new Sound("data/sounds/Swoosh-Public_D-4.wav");
+		
 	}
 	
 	public void update(GameContainer container, int delta) 
@@ -341,8 +348,18 @@ public class Game extends BasicGame {
 			    player = playerLeft;
 				playerX--;
 				direction = "left";
-				playerPoly.setX(playerX);
-				playerAttackPoly.setX(playerX);
+				playerPoly = new Polygon(new float[]{
+						 playerX + 5, playerY,
+						 playerX + 41, playerY,
+						 playerX + 41, playerY + 47,
+						 playerX + 5, playerY + 47
+				});	
+				playerAttackPoly = new Polygon(new float[]{
+						 playerX - 20, playerY - 20,
+						 playerX + 60, playerY - 20,
+						 playerX + 60, playerY + 60,
+						 playerX - 20, playerY + 60
+				});	
 		}
 		
 		else
@@ -389,8 +406,18 @@ public class Game extends BasicGame {
 			player = playerRight;
 			playerX++;
 			direction = "right";
-			playerPoly.setX(playerX);
-			playerAttackPoly.setX(playerX);
+			playerPoly = new Polygon(new float[]{
+					 playerX + 5, playerY,
+					 playerX + 41, playerY,
+					 playerX + 41, playerY + 47,
+					 playerX + 5, playerY + 47
+			});	
+			playerAttackPoly = new Polygon(new float[]{
+					 playerX - 20, playerY - 20,
+					 playerX + 60, playerY - 20,
+					 playerX + 60, playerY + 60,
+					 playerX - 20, playerY + 60
+			});	
 		}
 			try {
 				if (entityCollisionWith()){
@@ -423,8 +450,19 @@ public class Game extends BasicGame {
 			player = playerUp;
 			playerY--;
 			direction = "up";
-			playerPoly.setY(playerY);
-			playerAttackPoly.setY(playerY);
+			playerPoly = new Polygon(new float[]{
+					 playerX + 5, playerY,
+					 playerX + 41, playerY,
+					 playerX + 41, playerY + 47,
+					 playerX + 5, playerY + 47
+			});	
+			playerAttackPoly = new Polygon(new float[]{
+					 playerX - 20, playerY - 20,
+					 playerX + 60, playerY - 20,
+					 playerX + 60, playerY + 60,
+					 playerX - 20, playerY + 60
+			});	
+			
 			try {
 				if (entityCollisionWith()){
 					playerY++;
@@ -470,8 +508,19 @@ public class Game extends BasicGame {
 			player = playerDown;
 			playerY++;
 			direction = "down";
-			playerPoly.setY(playerY);
-			playerAttackPoly.setY(playerY);
+			playerPoly = new Polygon(new float[]{
+					 playerX + 5, playerY,
+					 playerX + 41, playerY,
+					 playerX + 41, playerY + 47,
+					 playerX + 5, playerY + 47
+			});	
+			playerAttackPoly = new Polygon(new float[]{
+					 playerX - 20, playerY - 20,
+					 playerX + 60, playerY - 20,
+					 playerX + 60, playerY + 60,
+					 playerX - 20, playerY + 60
+			});	
+			
 			try 
 			{
 				if (entityCollisionWith())
@@ -522,7 +571,7 @@ public class Game extends BasicGame {
 		*/ 
 		if ((container.getInput().isKeyDown(Input.KEY_SPACE)))
 		{
-			
+			whish.play();
 			if(direction.equals("down"))
 			player = attackDown;
 			if(direction.equals("up"))
@@ -547,18 +596,6 @@ public class Game extends BasicGame {
 		}
 		return false;
 	}
-	
-	/*public boolean enemyCollisionWith() throws SlickException{
-		for (int i = 0; i < BlockMap.entities.size(); i++){
-			Block entity1 = (Block) BlockMap.entities.get(i);
-			if (enemyPoly.intersects(entity1.poly)){
-				return true;
-			}
-					
-		}
-		return false;
-	}*/
-	//Specific to the Enemy class objects
 	public boolean enemyCollision(Enemy e) throws SlickException{
 		for (int i = 0; i < BlockMap.entities.size(); i++){
 			Block entity1 = (Block) BlockMap.entities.get(i);
@@ -628,7 +665,8 @@ public class Game extends BasicGame {
 		//}
 		//g.drawAnimation(badDude.getAnimation(), randomIndex_X, randomIndex_Y);
 		//g.draw(enemyPoly);
-		//g.draw(playerPoly);
+		g.draw(playerPoly);
+		g.draw(playerAttackPoly);
 		
 		Enemy s;
 	    Iterator<Enemy> e = enemyList.iterator();
@@ -677,7 +715,7 @@ public class Game extends BasicGame {
 		else if(numCrosses == 0)
 		{
 		   //"you died" object pops up on screen
-			//numCrosses = 5;
+			painful.play();
 			numLives--;
 			numCrosses = 5;
 			menuState = 2;
