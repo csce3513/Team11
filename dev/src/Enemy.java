@@ -18,6 +18,7 @@ public class Enemy {
 	private float ENEMYSPEED = 90;
 	private SpriteSheet sprite;
 	private Polygon poly;
+	private Polygon attackPoly;
 	private int directionX;
 
 	/* I haven't implemented this player class into the Game class yet. This is the basic start of the class. I'm still thinking about 
@@ -34,6 +35,12 @@ public class Enemy {
 				 x + 32, y + 32,
 				 x, y + 32
        });	
+	    attackPoly = new Polygon(new float[]{
+				 x, y,
+				 x + 36, y,
+				 x + 36, y + 36,
+				 x, y + 36
+      });	
 		try {
 			sprite = new SpriteSheet("data/enemies.png", 32, 32);
 		} catch (SlickException e) {
@@ -72,6 +79,10 @@ public class Enemy {
 	{
 		return poly;
 	}
+	public Polygon getAttackPoly()
+	{
+		return attackPoly;
+	}
 	public void setSpriteSheet(SpriteSheet s)
 	
 	{
@@ -96,6 +107,14 @@ public class Enemy {
 	public void setPolyY(int y)
 	{
 		poly.setY(y);
+	}
+	public void setAttackPolyX(int x)
+	{
+		attackPoly.setX(x);
+	}
+	public void setAttackPolyY(int y)
+	{
+		attackPoly.setY(y);
 	}
 	public void drawEnemy()
 	{

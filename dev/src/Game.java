@@ -9,7 +9,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Polygon;
 import java.util.*;
-import java.util.Iterator;
 
 public class Game extends BasicGame {
 	int n = 400;
@@ -18,7 +17,6 @@ public class Game extends BasicGame {
 	Random generator2 = new Random();
 	int randomIndex_X = generator1.nextInt( n );
 	int randomIndex_Y = generator2.nextInt( m );
-	Enemy enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10;
 	SpriteSheet walk_L;
 	SpriteSheet walk_R;
 	SpriteSheet walk_U;
@@ -76,12 +74,13 @@ public class Game extends BasicGame {
 	
 	private Polygon playerPoly;
 	private Polygon enemyPoly;
+	private Polygon playerAttackPoly;
 	String direction = "null"; // Karl
 	public BlockMap map;
+	int index[];
 	
 	//experimenting with ArrayList of enemies
-	private Enemy badDude;
-	private Enemy[] theEnemies = {enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10};
+	Enemy enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10;
 	private List<Enemy> enemyList;
  
 	public Game() {
@@ -92,16 +91,16 @@ public class Game extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		
 		//badDude = new Enemy(randomIndex_X, randomIndex_Y);
-		enemy1 = new Enemy(30, 60);
-		enemy2 = new Enemy(30, 60);
-		enemy3 = new Enemy(30, 90);
-		enemy4 = new Enemy(30, 120);
-		enemy5 = new Enemy(30, 150);
-		enemy6 = new Enemy(30, 180);
-		enemy7 = new Enemy(30, 210);
-		enemy8 = new Enemy(30, 240);
-		enemy9 = new Enemy(30, 270);
-		enemy10 = new Enemy(30, 300);
+		enemy1 = new Enemy(30, 30);
+		enemy2 = new Enemy(30, 80);
+		enemy3 = new Enemy(30, 130);
+		enemy4 = new Enemy(30, 180);
+		enemy5 = new Enemy(30, 230);
+		enemy6 = new Enemy(30, 280);
+		enemy7 = new Enemy(30, 330);
+		enemy8 = new Enemy(30, 380);
+		enemy9 = new Enemy(30, 430);
+		enemy10 = new Enemy(30, 480);
 		enemyList = new ArrayList<Enemy>();
 		//Adding enemies to ArrayList
     	enemyList.add(enemy1);
@@ -248,6 +247,12 @@ public class Game extends BasicGame {
 				 playerX+32, playerY+44,
 				 playerX, playerY+44
 		});	
+		playerAttackPoly = new Polygon(new float[]{
+				 playerX, playerY,
+				 playerX+35, playerY,
+				 playerX+35, playerY+46,
+				 playerX, playerY+46
+		});	
 		// ENEMIES
 		for (int frame = 0; frame < 2; frame++){
 			enemy.addFrame(enemySheet.getSprite(frame, 0), 150);
@@ -263,96 +268,59 @@ public class Game extends BasicGame {
 	
 	public void update(GameContainer container, int delta) 
 	{ 	
-		if(directionX < 1)
-		enemyX--;
-		else
-		enemyX++;
-		try {
-			if (enemyCollision(enemy1)){
-				if(directionX < 1)
-					enemyX = enemyX + 2;
-				else
-					enemyX--;
-				enemyPoly.setX(enemyX);
-				directionX = directionX * -1;
-			}
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		Enemy s;
 	    Iterator<Enemy> e = enemyList.iterator();
 	    while (e.hasNext()) {
 	      s = (Enemy) e.next();
-	      if(s.getDirectionX() < 1)
-			{
-				s.setX(s.getX() - 1);
-			    s.setPolyX(s.getX());
-			}
-			else
-			{
-				s.setX(s.getX() + 1);
-			    s.setPolyX(s.getX());
-			}
-				try 
+	      if(s != null)
+	      {
+		      if(s.getDirectionX() < 1)
 				{
-					if (enemyCollision(s)){
-						if(s.getDirectionX() < 1)
-						{
-							s.setX(s.getX() - s.getDirectionX()*2);
-							s.setPolyX(s.getX());
-						    s.setDirectionX(s.getDirectionX() * -1);
-						}
-						else
-						{
-							s.setDirectionX(s.getDirectionX() * -1);
-							s.setX(s.getX() + s.getDirectionX()*2);	
-							s.setPolyX(s.getX());
-							//enemy1.setDirectionX(enemy1.getDirectionX() * -1);
-						}
-					}
-				} 
-				catch (SlickException e1) 
-				{
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-			    }
-	    }
-		if(enemy1.getDirectionX() < 1)
-		{
-			enemy1.setX(enemy1.getX() - 1);
-		    enemy1.setPolyX(enemy1.getX());
-		}
-		else
-		{
-			enemy1.setX(enemy1.getX() + 1);
-		    enemy1.setPolyX(enemy1.getX());
-		}
-			try 
-			{
-				if (enemyCollision(enemy1)){
-					if(enemy1.getDirectionX() < 1)
-					{
-						enemy1.setX(enemy1.getX() - enemy1.getDirectionX()*2);
-						enemy1.setPolyX(enemy1.getX());
-					    enemy1.setDirectionX(enemy1.getDirectionX() * -1);
-					}
-					else
-					{
-						enemy1.setDirectionX(enemy1.getDirectionX() * -1);
-						enemy1.setX(enemy1.getX() + enemy1.getDirectionX()*2);	
-						enemy1.setPolyX(enemy1.getX());
-						//enemy1.setDirectionX(enemy1.getDirectionX() * -1);
-					}
+					s.setX(s.getX() - 1);
+				    s.setPolyX(s.getX());
 				}
-			} 
-			catch (SlickException e1) 
-			{
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-		    }
-			
+				else
+				{
+					s.setX(s.getX() + 1);
+				    s.setPolyX(s.getX());
+				}
+					try 
+					{
+						if (enemyCollision(s)){
+							if(s.getDirectionX() < 1)
+							{
+								s.setX(s.getX() - s.getDirectionX()*2);
+								s.setPolyX(s.getX());
+							    s.setDirectionX(s.getDirectionX() * -1);
+							}
+							else
+							{
+								s.setDirectionX(s.getDirectionX() * -1);
+								s.setX(s.getX() + s.getDirectionX()*2);	
+								s.setPolyX(s.getX());
+							}
+						}
+					} 
+					catch (SlickException e1) 
+					{
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+				    }
+					try {
+						if ((battle(s)) && (container.getInput().isKeyPressed(Input.KEY_SPACE))){
+							if(s != null )
+							enemyList.indexOf(s);
+							enemyList.remove(s); 
+							e = enemyList.iterator();
+						}
+					} catch (SlickException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	      	}
+	    }
+			enemyList.remove(index);
 		if (container.getInput().isKeyPressed(Input.KEY_Q))
 		{
 			quit = true;
@@ -379,6 +347,7 @@ public class Game extends BasicGame {
 				playerX--;
 				direction = "left";
 				playerPoly.setX(playerX);
+				playerAttackPoly.setX(playerX);
 		}
 		else
 			player = playerNoMove;
@@ -397,8 +366,9 @@ public class Game extends BasicGame {
 					if (entityCollisionWith()){
 						playerX++;
            				playerPoly.setX(playerX);
+           				playerAttackPoly.setX(playerX);
 					}
-					if (enemyCollision(enemy1)){
+					/*if (enemyCollision(enemy1)){
 						enemyX--;
 						enemyPoly.setX(enemyX);
 					}
@@ -411,7 +381,7 @@ public class Game extends BasicGame {
 						//enemyPoly.setClosed(true);
 						numCrosses--;
 						enemyDead = true;
-					}
+					}*/
 					
 				} catch (SlickException e1) {
 					// TODO Auto-generated catch block
@@ -423,12 +393,14 @@ public class Game extends BasicGame {
 			playerX++;
 			direction = "right";
 			playerPoly.setX(playerX);
+			playerAttackPoly.setX(playerX);
 			try {
 				if (entityCollisionWith()){
 					playerX--;
 					playerPoly.setX(playerX);
+					playerAttackPoly.setX(playerX);
 				}
-				if (enemyCollision(enemy1)){
+				/*if (enemyCollision(enemy1)){
 					enemyX++;
 					enemyPoly.setX(enemyX);
 				}
@@ -439,7 +411,7 @@ public class Game extends BasicGame {
 					enemyPoly.setX(enemyX);
 					numCrosses--;
 					enemyDead = true;
-				}
+				}*/
 			} catch (SlickException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -451,12 +423,14 @@ public class Game extends BasicGame {
 			playerY--;
 			direction = "up";
 			playerPoly.setY(playerY);
+			playerAttackPoly.setY(playerY);
 			try {
 				if (entityCollisionWith()){
 					playerY++;
 					playerPoly.setY(playerY);
+					playerAttackPoly.setY(playerY);
 				}
-				if (enemyCollision(enemy1)){
+				/*if (enemyCollision(enemy1)){
 					enemyY--;
 					enemyPoly.setY(enemyY);
 				}
@@ -467,7 +441,7 @@ public class Game extends BasicGame {
 					enemyPoly.setY(enemyY);
 					numCrosses--;
 					enemyDead = true;
-				}
+				}*/
 			} catch (SlickException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -491,19 +465,21 @@ public class Game extends BasicGame {
 			playerY++;
 			direction = "down";
 			playerPoly.setY(playerY);
+			playerAttackPoly.setY(playerY);
 			try 
 			{
 				if (entityCollisionWith())
 				{
 					playerY--;
 					playerPoly.setY(playerY);
+					playerAttackPoly.setY(playerY);
 				}
-				if (enemyCollision(enemy1))
+				/*if (enemyCollision(enemy1))
 				{
 					enemyY++;
 					enemyPoly.setY(enemyY);
 				}
-				if (battle())
+			    if (battle())
 				{
 					playerY -= 20;
 					playerPoly.setY(playerY);
@@ -511,33 +487,27 @@ public class Game extends BasicGame {
 					enemyPoly.setY(enemyY);
 					numCrosses--;
 					
-				}
+				}*/
 			} catch (SlickException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-		try 
-		{
-			if (battle())
-			{
-				
-//				System.out.println("BATTLE");
-				
-			}
-		} catch (SlickException e1) 
-		{
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 //		System.out.println(direction); // KARL DEBUG
-		enemyX = enemyX++;
+		/*enemyX = enemyX++;
 		enemyPoly.setX(enemyX);
+		*/ 
 		}
 
-	
-	public boolean battle() throws SlickException{
-			if (enemyPoly.intersects(playerPoly)){
+	public boolean attack(Enemy e) throws SlickException{
+		if(e.getPoly().intersects(playerAttackPoly)){
+			return true;
+		}
+		return false;
+	}
+	public boolean battle(Enemy e) throws SlickException{
+			if (e.getPoly().intersects(playerPoly)){
 				return true;
 		}
 		return false;
@@ -619,7 +589,7 @@ public class Game extends BasicGame {
 		g.drawAnimation(player, playerX, playerY);
 		//if(enemyDead == false)
 		//{
-			g.drawAnimation(enemy, enemyX, enemyY);
+			//g.drawAnimation(enemy, enemyX, enemyY);
 		//}
 		//g.drawAnimation(badDude.getAnimation(), randomIndex_X, randomIndex_Y);
 		//g.draw(enemyPoly);
@@ -629,9 +599,12 @@ public class Game extends BasicGame {
 	    Iterator<Enemy> e = enemyList.iterator();
 	    while (e.hasNext()) {
 	      s = (Enemy) e.next();
-	      g.drawAnimation(s.getAnimation(), s.getX(), s.getY());
-	      s.setPolyX(s.getX());
-	      s.setPolyY(s.getY());
+	      if(s != null)
+	      {
+	         g.drawAnimation(s.getAnimation(), s.getX(), s.getY());
+	         s.setPolyX(s.getX());
+	         s.setPolyY(s.getY());
+	      } 
 	    }
 		StatusPanel.draw(0, 480);
 		
