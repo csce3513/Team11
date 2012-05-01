@@ -16,6 +16,7 @@ public class Game extends BasicGame {
 	
 	Sound whish;
 	Sound painful;
+	Sound injured;
 	Music theme;
 	SpriteSheet walk_L;
 	SpriteSheet walk_R;
@@ -39,10 +40,12 @@ public class Game extends BasicGame {
     Image gameover;
     Image startButton;
     Image dieScreen;
+    Image youWinScreen;
     Image tutorial;
     boolean restart;
     boolean quit;
     int menuState;
+    int numDeadEnemies;
     String enemyRef = "data/enemies.png";
 	int numCrosses;
 	int numLives;
@@ -111,6 +114,7 @@ public class Game extends BasicGame {
 		restart = false;
 		quit = false;
 		directionX = 1;
+		numDeadEnemies = 0;
 		enemyDead = false;
 		playerX = 320;
 		playerY = 240;
@@ -121,6 +125,7 @@ public class Game extends BasicGame {
 		menu = new Image("data/titlescreen.png");
 		dieScreen = new Image("data/deadZ.png");
 		tutorial = new Image("data/Tutorial.png");
+		youWinScreen = new Image("data/youWin_screen.png");
 		//Instantiate objects for Health Status bar
 		StatusPanel = new Image("data/StatusPanel.png");
 		cross1 = new Image("data/RedCross.png");
@@ -252,6 +257,7 @@ public class Game extends BasicGame {
 		
 		whish = new Sound("data/sounds/Whish.wav");
 		painful = new Sound("data/sounds/painful.wav");
+		injured = new Sound("data/sounds/Shot in face.wav");
 		//theme = new Music("");
 	}
 	
@@ -301,6 +307,7 @@ public class Game extends BasicGame {
 							if(s != null )
 							enemyList.indexOf(s);
 							enemyList.remove(s); 
+							numDeadEnemies++;
 							e = enemyList.iterator();
 						}
 					} catch (SlickException e1) {
@@ -381,6 +388,7 @@ public class Game extends BasicGame {
 								s.setX(s.getX() - 1);
 								s.setPolyX(s.getX());					
 								numCrosses--;
+								injured.play();
 				    	  }
 				      } 
 				    }
@@ -425,6 +433,7 @@ public class Game extends BasicGame {
 							s.setX(s.getX() + 1);
 							s.setPolyX(s.getX());					
 							numCrosses--;
+							injured.play();
 			    	  }
 			      } 
 			    }
@@ -470,6 +479,7 @@ public class Game extends BasicGame {
 							s.setY(s.getY() - 1);
 							s.setPolyY(s.getY());					
 							numCrosses--;
+							injured.play();
 			    	  }
 			      } 
 			    }
@@ -518,6 +528,7 @@ public class Game extends BasicGame {
 							s.setY(s.getY() + 1);
 							s.setPolyY(s.getY());					
 							numCrosses--;
+							injured.play();
 			    	  }
 			      } 
 			    }
@@ -581,6 +592,13 @@ public class Game extends BasicGame {
 		
 	menu.draw();
 	//theme.play();
+	if(numDeadEnemies >= 9)
+		menuState = 4;
+	
+	if(menuState == 4)
+	{
+		youWinScreen.draw();
+	}
 	if(quit == true)
 	{
 		container.exit();
