@@ -1,4 +1,4 @@
-import org.newdawn.slick.Animation;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -9,7 +9,6 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.geom.Polygon;
 import java.util.*;
 
 public class Game extends BasicGame {
@@ -18,19 +17,7 @@ public class Game extends BasicGame {
 	Sound painful;
 	Sound injured;
 	Music theme;
-	SpriteSheet walk_L;
-	SpriteSheet walk_R;
-	SpriteSheet walk_U;
-	SpriteSheet walk_D;
-	SpriteSheet walk_Main;
-	SpriteSheet stop_L;
-	SpriteSheet stop_R;
-	SpriteSheet stop_U;
-	SpriteSheet stop_D;
-	SpriteSheet attack_U;
-	SpriteSheet attack_D;
-	SpriteSheet attack_L;
-	SpriteSheet attack_R;
+
 	SpriteSheet enemySheet;
 	Image cross1, cross2, cross3, cross4, cross5;
     Image life1, life2, life3;
@@ -45,39 +32,29 @@ public class Game extends BasicGame {
     boolean restart;
     boolean quit;
     int menuState;
+    int gameState = 1;
     int numDeadEnemies;
     String enemyRef = "data/enemies.png";
 	int numCrosses;
 	int numLives;
-	float playerSpeed = 90;
+
 	boolean enemyDead;
-	private float playerX;
-	private float playerY;
+
 	int directionX;
-	
-	private Animation up, down, left, right;
-	private Animation player;
-	private Animation playerNoMove;
-	private Animation playerLeft;
-	private Animation playerRight;
-	private Animation playerUp;
-	private Animation playerDown;
-	private Animation enemy;
+
 //	private Animation boss;
-	private Animation attackLeft;
-	private Animation attackRight;
-	private Animation attackUp;
-	private Animation attackDown;
-	
-	private Polygon playerPoly;
-	private Polygon playerAttackPoly;
+
 	String direction = "null"; // Karl
-	public BlockMap map;
+	public BlockMap map1;
+	public BlockMap map2;
 	int index[];
 	
 	//experimenting with ArrayList of enemies
-	Enemy enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10;
+	Enemy enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10, enemy11, enemy12, enemy13, enemy14, enemy15;
+	Player player1;
+	Transporter door;
 	private List<Enemy> enemyList;
+	private List<Enemy> enemyList2;
  
 	public Game() {
 		super("Son of Z"); //name in window
@@ -86,21 +63,29 @@ public class Game extends BasicGame {
 	
 	public void init(GameContainer container) throws SlickException {
 		
+
+		
 		whish = new Sound("data/sounds/Whish.wav");
 		painful = new Sound("data/sounds/painful.wav");
 		injured = new Sound("data/sounds/Shot in face.wav");
 		//Initialize enemies at specific coords
 		enemy1 = new Enemy(30, 30);
-		enemy2 = new Enemy(30, 80);
+		enemy2 = new Enemy(90, 80);
 		enemy3 = new Enemy(30, 130);
-		enemy4 = new Enemy(30, 180);
-		enemy5 = new Enemy(30, 230);
-		enemy6 = new Enemy(30, 280);
+		enemy4 = new Enemy(74, 180);
+		enemy5 = new Enemy(49, 230);
+		enemy6 = new Enemy(400, 280);
 		enemy7 = new Enemy(30, 330);
 		enemy8 = new Enemy(30, 380);
 		enemy9 = new Enemy(30, 430);
 		enemy10 = new Enemy(30, 480);
+		enemy11 = new Enemy(93, 230);
+		enemy12 = new Enemy(150, 100);
+		enemy13 = new Enemy(210, 330);
+		enemy14 = new Enemy(490, 390);
+		enemy15 = new Enemy(580, 270);
 		enemyList = new ArrayList<Enemy>();
+		enemyList2 = new ArrayList<Enemy>();
 		//Adding enemies to ArrayList
     	enemyList.add(enemy1);
 		enemyList.add(enemy2);
@@ -112,14 +97,26 @@ public class Game extends BasicGame {
 		enemyList.add(enemy8);
 		enemyList.add(enemy9);
 		enemyList.add(enemy10);
+		
+		enemyList2.add(enemy11);
+		enemyList2.add(enemy12);
+		enemyList2.add(enemy13);
+		enemyList2.add(enemy14);
+		enemyList2.add(enemy15);
+		
+		player1 = new Player(320, 140);
+		
+		
+		
+		door = new Transporter(636, 208);
+		
+		container.setVSync(true);  //display syncs with vertical refresh
 	 
 		restart = false;
 		quit = false;
 		directionX = 1;
 		numDeadEnemies = 0;
 		enemyDead = false;
-		playerX = 320;
-		playerY = 240;
 		menuState = 0;
 		numCrosses = 5;
 		numLives = 3;
@@ -138,242 +135,146 @@ public class Game extends BasicGame {
     	life1 = new Image("data/front.png");
     	life2 = new Image("data/front.png");
     	life3 = new Image("data/front.png");
-    	// Karl
-    	stop_D = new SpriteSheet("data/Standing/down.png", 47, 62);
-    	stop_U = new SpriteSheet("data/Standing/up.png", 47, 62);
-    	stop_L = new SpriteSheet("data/Standing/left.png", 47, 62);
-    	stop_R = new SpriteSheet("data/Standing/right.png", 47, 62);
-    	attack_D = new SpriteSheet("data/Attack/frontattack.png", 50, 63);
-    	attack_U = new SpriteSheet("data/Attack/backattack.png", 60, 63);
-    	attack_R = new SpriteSheet("data/Attack/rightattack.png", 56, 63);
-    	attack_L = new SpriteSheet("data/Attack/leftattack.png", 54, 63);
-    	// Karl
-		container.setVSync(true);  //display syncs with vertical refresh
-		walk_D = new SpriteSheet("data/Front/frontmove2.png", 47, 62); //player location
-		walk_L = new SpriteSheet("data/L_side/L_sidetexture.png", 47, 48); //player location
-		walk_R = new SpriteSheet("data/L_side/R_sidetexture.png", 47, 62);
-		walk_U = new SpriteSheet("data/Back/backmove.png", 47, 62);
+
 		enemySheet = new SpriteSheet(enemyRef, 32, 32); //enemy reference
-		map = new BlockMap("data/map1.tmx"); //map location
 		
-		//Instantiate different Player animations (depending on what direction he's headed)
-		player = new Animation();
-		player.setSpeed(playerSpeed);
-		playerNoMove = new Animation();
-		playerNoMove.setSpeed(playerSpeed);
-		playerLeft = new Animation();
-		playerLeft.setSpeed(playerSpeed);
-		playerRight = new Animation();
-		playerRight.setSpeed(playerSpeed);
-		playerUp = new Animation();
-		playerUp.setSpeed(playerSpeed);
-		playerDown = new Animation();
-		playerDown.setSpeed(playerSpeed);
-		// Karl
-		attackLeft = new Animation();
-		attackLeft.setSpeed(playerSpeed);
-		attackRight = new Animation();
-		attackRight.setSpeed(playerSpeed);
-		attackUp = new Animation();
-		attackUp.setSpeed(playerSpeed);		
-		attackDown = new Animation();
-		attackDown.setSpeed(playerSpeed);
-		
-		up = new Animation();
-		up.setSpeed(playerSpeed);
-		down = new Animation();
-		down.setSpeed(playerSpeed);
-		left = new Animation();
-		left.setSpeed(playerSpeed);
-		right = new Animation();
-		right.setSpeed(playerSpeed);
-		
-		// Karl
-		enemy = new Animation();
-		walk_Main = walk_D;
-		enemy.setAutoUpdate(true);
-		
-		//Fill each player instance with frames from their respective sprite sheets
-		for (int frame = 0; frame < 1; frame++){
-			player.addFrame(walk_Main.getSprite(frame, 1), 12100); //
-		}
-		for (int frame = 0; frame < 1; frame++){
-			playerNoMove.addFrame(walk_Main.getSprite(frame, 1), 12100);
-		}
-		for (int frame = 0; frame < 1; frame++){
-			up.addFrame(stop_U.getSprite(frame, 1), 12100);
-		}
-		
-		// ATTACK
-		for (int frame = 0; frame < 4; frame++){
-			attackLeft.addFrame(attack_L.getSprite(frame, 1), 12100);
-		}
-		for (int frame = 0; frame < 4; frame++){
-			attackRight.addFrame(attack_R.getSprite(frame, 1), 12100);
-		}
-		for (int frame = 0; frame < 4; frame++){
-			attackUp.addFrame(attack_U.getSprite(frame, 1), 12100);
-		}
-		for (int frame = 0; frame < 4; frame++){
-			attackDown.addFrame(attack_D.getSprite(frame, 1), 12100);
-		}
-		// ATTACK
-		
-		for (int frame = 0; frame < 1; frame++){
-			down.addFrame(stop_D.getSprite(frame, 1), 12100); 
-		}
-		for (int frame = 0; frame < 1; frame++){
-			left.addFrame(stop_L.getSprite(frame, 1), 12100); 
-		}
-		for (int frame = 0; frame < 1; frame++){
-			right.addFrame(stop_R.getSprite(frame, 1), 12100); 
-		}
-		for (int frame = 0; frame < 8; frame++){
-			playerRight.addFrame(walk_R.getSprite(frame, 1), 11100); 
-		}
-		for (int frame = 0; frame < 7; frame++){
-			playerUp.addFrame(walk_U.getSprite(frame, 1), 11100); 
-		}
-		for (int frame = 0; frame < 7; frame++){
-			playerDown.addFrame(walk_D.getSprite(frame, 1), 11100); 
-		}
-		for (int frame = 0; frame < 8; frame++){
-			playerLeft.addFrame(walk_L.getSprite(frame, 0), 11100);
-		}
-		playerPoly = new Polygon(new float[]{
-				 playerX + 5, playerY,
-				 playerX + 41, playerY,
-				 playerX + 41, playerY + 47,
-				 playerX + 5, playerY + 47
-		});	
-		playerAttackPoly = new Polygon(new float[]{
-				 playerX - 20, playerY - 20,
-				 playerX + 60, playerY - 20,
-				 playerX + 60, playerY + 60,
-				 playerX - 20, playerY + 60
-		});	
-		// ENEMIES
-		for (int frame = 0; frame < 2; frame++){
-			enemy.addFrame(enemySheet.getSprite(frame, 0), 10);
-		}
-		
+
+			map1 = new BlockMap("data/map1.tmx"); //map location
+			map2 = new BlockMap("data/map2.tmx"); //map location
+
+
+
+	
 		//theme = new Music("");
 	}
 	
 	public void update(GameContainer container, int delta) 
 	{ 	
 		
-		Enemy s;
-	    Iterator<Enemy> e = enemyList.iterator();
-	    while (e.hasNext()) {
-	      s = (Enemy) e.next();
-	      if(s != null)
-	      {
-		      if(s.getDirectionX() < 1)
-				{
-					s.setX(s.getX() - 1);
-				    s.setPolyX(s.getX());
-				}
-				else
-				{
-					s.setX(s.getX() + 1);
-				    s.setPolyX(s.getX());
-				}
-					try 
+		//System.out.println(gameState);
+		
+		
+		if (gameState ==1){
+			Enemy s;
+		    Iterator<Enemy> e = enemyList.iterator();
+		    while (e.hasNext()) {
+		      s = (Enemy) e.next();
+		      if(s != null)
+		      {
+			      if(s.getDirectionX() < 1)
 					{
-						if (enemyCollision(s)){
-							if(s.getDirectionX() < 1)
-							{
-								s.setX(s.getX() - s.getDirectionX()*2);
-								s.setPolyX(s.getX());
-							    s.setDirectionX(s.getDirectionX() * -1);
+						s.setX(s.getX() - 1);
+					    s.setPolyX(s.getX());
+					}
+					else
+					{
+						s.setX(s.getX() + 1);
+					    s.setPolyX(s.getX());
+					}
+						try 
+						{
+							if (enemyCollision(s, map1)){
+								if(s.getDirectionX() < 1)
+								{
+									s.setX(s.getX() - s.getDirectionX()*2);
+									s.setPolyX(s.getX());
+								    s.setDirectionX(s.getDirectionX() * -1);
+								}
+								else
+								{
+									s.setDirectionX(s.getDirectionX() * -1);
+									s.setX(s.getX() + s.getDirectionX()*2);	
+									s.setPolyX(s.getX());
+								}
 							}
-							else
-							{
-								s.setDirectionX(s.getDirectionX() * -1);
-								s.setX(s.getX() + s.getDirectionX()*2);	
-								s.setPolyX(s.getX());
+						} 
+						catch (SlickException e1) 
+						{
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+					    }
+						try {
+							if ((attack(s)) && (container.getInput().isKeyDown(Input.KEY_SPACE))){
+								if(s != null )
+								enemyList.indexOf(s);
+								enemyList.remove(s); 
+								//numDeadEnemies++;
+								e = enemyList.iterator();
 							}
+						} catch (SlickException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
-					} 
-					catch (SlickException e1) 
-					{
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-				    }
+						
+		      	}
+		    }
+				enemyList.remove(index);
+			if (container.getInput().isKeyPressed(Input.KEY_Q))
+			{
+				quit = true;
+			}
+			if (container.getInput().isKeyPressed(Input.KEY_T))
+			{
+				menuState = 3;
+			}
+			if (container.getInput().isKeyPressed(Input.KEY_ENTER))
+			{
+				restart = true;
+			}
+			if (container.getInput().isKeyPressed(Input.KEY_M))
+			{
+				menuState = 0;
+			}
+			if (container.getInput().isKeyPressed(Input.KEY_SPACE))
+			{
+				menuState = 1;
+
+			}
+			
+			if ((container.getInput().isKeyDown(Input.KEY_LEFT)) || (container.getInput().isKeyDown(Input.KEY_A))){
+				//blaine
+				player1.setDirection("left");
+				player1.setX(player1.getX()-1);
+
 					try {
-						if ((attack(s)) && (container.getInput().isKeyPressed(Input.KEY_SPACE))){
-							if(s != null )
-							enemyList.indexOf(s);
-							enemyList.remove(s); 
-							numDeadEnemies++;
-							e = enemyList.iterator();
+						if (entityCollisionWith(map1)){
+							player1.setX(player1.getX()+1);
 						}
+						e = enemyList.iterator();
+					    while (e.hasNext()) {
+					      s = (Enemy) e.next();
+					      if(s != null)
+					      {
+					    	  if (battle(s)){
+					    		  player1.setX(player1.getX()+20);
+
+									s.setX(s.getX() - 1);
+									s.setPolyX(s.getX());					
+									numCrosses--;
+									injured.play();
+					    	  }
+					      } 
+					    }
+						
 					} catch (SlickException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+			}
 					
-	      	}
-	    }
-			enemyList.remove(index);
-		if (container.getInput().isKeyPressed(Input.KEY_Q))
-		{
-			quit = true;
-		}
-		if (container.getInput().isKeyPressed(Input.KEY_T))
-		{
-			menuState = 3;
-		}
-		if (container.getInput().isKeyPressed(Input.KEY_ENTER))
-		{
-			restart = true;
-		}
-		if (container.getInput().isKeyPressed(Input.KEY_M))
-		{
-			menuState = 0;
-		}
-		if (container.getInput().isKeyPressed(Input.KEY_SPACE))
-		{
-			menuState = 1;
-		}
-		
-		if ((container.getInput().isKeyDown(Input.KEY_LEFT)) || (container.getInput().isKeyDown(Input.KEY_A))){
-			    player = playerLeft;
-				playerX--;
-				direction = "left";
-				playerPoly = new Polygon(new float[]{
-						 playerX + 5, playerY,
-						 playerX + 41, playerY,
-						 playerX + 41, playerY + 47,
-						 playerX + 5, playerY + 47
-				});	
-				playerAttackPoly = new Polygon(new float[]{
-						 playerX - 20, playerY - 20,
-						 playerX + 60, playerY - 20,
-						 playerX + 60, playerY + 60,
-						 playerX - 20, playerY + 60
-				});	
-		}
-		
-		else
-			player = playerNoMove;
-		// Karl
-		if(direction.equals("up"))
-				playerNoMove = up;
-		if(direction.equals("down"))
-				playerNoMove = down;
-		if(direction.equals("left"))
-				playerNoMove = left;
-		if(direction.equals("right"))
-				playerNoMove = right;
-		// Karl
-		
+					else
+						
+						player1.stopMovement();
+			
+
+			if ((container.getInput().isKeyDown(Input.KEY_RIGHT)) || (container.getInput().isKeyDown(Input.KEY_D))) {
+				//blaine
+				player1.setDirection("right");
+				player1.setX(player1.getX()+1);
+				
 				try {
-					if (entityCollisionWith()){
-						playerX++;
-           				playerPoly.setX(playerX);
-           				playerAttackPoly.setX(playerX);
+					if (entityCollisionWith(map1)){
+						player1.setX(player1.getX()-1);
 					}
 					e = enemyList.iterator();
 				    while (e.hasNext()) {
@@ -381,191 +282,346 @@ public class Game extends BasicGame {
 				      if(s != null)
 				      {
 				    	  if (battle(s)){
-				    			
-								playerX += 20;
-								playerPoly.setX(playerX);
-								s.setX(s.getX() - 1);
+				    		  player1.setX(player1.getX()-20);
+
+								s.setX(s.getX() + 1);
 								s.setPolyX(s.getX());					
 								numCrosses--;
 								injured.play();
 				    	  }
 				      } 
 				    }
-					
 				} catch (SlickException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-		
-		if ((container.getInput().isKeyDown(Input.KEY_RIGHT)) || (container.getInput().isKeyDown(Input.KEY_D))) {
-			player = playerRight;
-			playerX++;
-			direction = "right";
-			playerPoly = new Polygon(new float[]{
-					 playerX + 5, playerY,
-					 playerX + 41, playerY,
-					 playerX + 41, playerY + 47,
-					 playerX + 5, playerY + 47
-			});	
-			playerAttackPoly = new Polygon(new float[]{
-					 playerX - 20, playerY - 20,
-					 playerX + 60, playerY - 20,
-					 playerX + 60, playerY + 60,
-					 playerX - 20, playerY + 60
-			});	
-		}
-			try {
-				if (entityCollisionWith()){
-					playerX--;
-					playerPoly.setX(playerX);
-					playerAttackPoly.setX(playerX);
-				}
-				e = enemyList.iterator();
-			    while (e.hasNext()) {
-			      s = (Enemy) e.next();
-			      if(s != null)
-			      {
-			    	  if (battle(s)){
-			    			
-							playerX -= 20;
-							playerPoly.setX(playerX);
-							s.setX(s.getX() + 1);
-							s.setPolyX(s.getX());					
-							numCrosses--;
-							injured.play();
-			    	  }
-			      } 
-			    }
-			} catch (SlickException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
-		
-		
-		if ((container.getInput().isKeyDown(Input.KEY_UP)) || (container.getInput().isKeyDown(Input.KEY_W))){
-			player = playerUp;
-			playerY--;
-			direction = "up";
-			playerPoly = new Polygon(new float[]{
-					 playerX + 5, playerY,
-					 playerX + 41, playerY,
-					 playerX + 41, playerY + 47,
-					 playerX + 5, playerY + 47
-			});	
-			playerAttackPoly = new Polygon(new float[]{
-					 playerX - 20, playerY - 20,
-					 playerX + 60, playerY - 20,
-					 playerX + 60, playerY + 60,
-					 playerX - 20, playerY + 60
-			});	
 			
-			try {
-				if (entityCollisionWith()){
-					playerY++;
-					playerPoly.setY(playerY);
-					playerAttackPoly.setY(playerY);
+			
+			if ((container.getInput().isKeyDown(Input.KEY_UP)) || (container.getInput().isKeyDown(Input.KEY_W))){
+				//blaine
+				player1.setDirection("up");
+				player1.setY(player1.getY()-1);
+
+				try {
+					if (entityCollisionWith(map1)){
+						player1.setY(player1.getY()+1);
+					}
+					
+					e = enemyList.iterator();
+				    while (e.hasNext()) {
+				      s = (Enemy) e.next();
+				      if(s != null)
+				      {
+				    	  if (battle(s)){
+				    		  
+				    		  player1.setY(player1.getY()+20);
+								s.setY(s.getY() - 1);
+								s.setPolyY(s.getY());					
+								numCrosses--;
+								injured.play();
+				    	  }
+				      } 
+				    }
+				} catch (SlickException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				
-				e = enemyList.iterator();
-			    while (e.hasNext()) {
-			      s = (Enemy) e.next();
-			      if(s != null)
-			      {
-			    	  if (battle(s)){
-			    			
-							playerY += 20;
-							playerPoly.setY(playerY);
-							s.setY(s.getY() - 1);
-							s.setPolyY(s.getY());					
-							numCrosses--;
-							injured.play();
-			    	  }
-			      } 
-			    }
-			} catch (SlickException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
-		}
-		
-		if ((container.getInput().isKeyDown(Input.KEY_DOWN)) || (container.getInput().isKeyDown(Input.KEY_S)))
-		{
-			player = playerDown;
-			playerY++;
-			direction = "down";
-			playerPoly = new Polygon(new float[]{
-					 playerX + 5, playerY,
-					 playerX + 41, playerY,
-					 playerX + 41, playerY + 47,
-					 playerX + 5, playerY + 47
-			});	
-			playerAttackPoly = new Polygon(new float[]{
-					 playerX - 20, playerY - 20,
-					 playerX + 60, playerY - 20,
-					 playerX + 60, playerY + 60,
-					 playerX - 20, playerY + 60
-			});	
 			
-			try 
+			if ((container.getInput().isKeyDown(Input.KEY_DOWN)) || (container.getInput().isKeyDown(Input.KEY_S)))
 			{
-				if (entityCollisionWith())
+				//blaine
+				player1.setDirection("down");
+				player1.setY(player1.getY()+1);
+				//System.out.println(player1.getDirection());
+
+				try 
 				{
-					playerY--;
-					playerPoly.setY(playerY);
-					playerAttackPoly.setY(playerY);
+					if (entityCollisionWith(map1))
+					{
+						player1.setY(player1.getY()-1);
+					}
+					
+					e = enemyList.iterator();
+				    while (e.hasNext()) {
+				      s = (Enemy) e.next();
+				      if(s != null)
+				      {
+				    	  if (battle(s)){
+				    		  
+				    		  player1.setY(player1.getY()-20);
+
+								s.setY(s.getY() + 1);
+								s.setPolyY(s.getY());					
+								numCrosses--;
+								injured.play();
+				    	  }
+				      } 
+				    }
+				} catch (SlickException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-				
-				e = enemyList.iterator();
-			    while (e.hasNext()) {
-			      s = (Enemy) e.next();
-			      if(s != null)
-			      {
-			    	  if (battle(s)){
-			    			
-							playerY -= 20;
-							playerPoly.setY(playerY);
-							s.setY(s.getY() + 1);
-							s.setPolyY(s.getY());					
-							numCrosses--;
-							injured.play();
-			    	  }
-			      } 
-			    }
+			}
+			
+			if ((container.getInput().isKeyDown(Input.KEY_SPACE)))
+			{
+				//whish.play();
+				player1.isAttacking(true);
+
+			}
+			try {
+				if (doorCollisionWith(door, map1)){
+					gameState = 2;
+					player1.setX(18);
+					player1.setY(208);
+					enemyList.clear();
+				}
 			} catch (SlickException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 		
-		if ((container.getInput().isKeyDown(Input.KEY_SPACE)))
-		{
-			if(direction.equals("down"))
-			player = attackDown;
-			if(direction.equals("up"))
-			player = attackUp;
-			if(direction.equals("left"))
-			player = attackLeft;
-			if(direction.equals("right"))
-			player = attackRight;
+		if (gameState ==2){
+
+			Enemy s;
+		    Iterator<Enemy> e = enemyList2.iterator();
+		    while (e.hasNext()) {
+		      s = (Enemy) e.next();
+		      if(s != null)
+		      {
+			      if(s.getDirectionX() < 1)
+					{
+						s.setX(s.getX() - 1);
+					    s.setPolyX(s.getX());
+					}
+					else
+					{
+						s.setX(s.getX() + 1);
+					    s.setPolyX(s.getX());
+					}
+						try 
+						{
+							if (enemyCollision(s, map2)){
+								if(s.getDirectionX() < 1)
+								{
+									s.setX(s.getX() - s.getDirectionX()*2);
+									s.setPolyX(s.getX());
+								    s.setDirectionX(s.getDirectionX() * -1);
+								}
+								else
+								{
+									s.setDirectionX(s.getDirectionX() * -1);
+									s.setX(s.getX() + s.getDirectionX()*2);	
+									s.setPolyX(s.getX());
+								}
+							}
+						} 
+						catch (SlickException e1) 
+						{
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+					    }
+						try {
+							if ((attack(s)) && (container.getInput().isKeyDown(Input.KEY_SPACE))){
+								if(s != null )
+								enemyList2.indexOf(s);
+								enemyList2.remove(s); 
+								numDeadEnemies++;
+								e = enemyList2.iterator();
+							}
+						} catch (SlickException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+		      	}
+		    }
+				enemyList2.remove(index);
+			if (container.getInput().isKeyPressed(Input.KEY_Q))
+			{
+				quit = true;
+			}
+			if (container.getInput().isKeyPressed(Input.KEY_T))
+			{
+				menuState = 3;
+			}
+			if (container.getInput().isKeyPressed(Input.KEY_ENTER))
+			{
+				restart = true;
+			}
+			if (container.getInput().isKeyPressed(Input.KEY_M))
+			{
+				menuState = 0;
+			}
+			if ((container.getInput().isKeyPressed(Input.KEY_SPACE)) && (menuState==0 || menuState==3 || menuState==2))
+			{
+				menuState = 1;
+				gameState = 1;
+			}
+			
+			if ((container.getInput().isKeyDown(Input.KEY_LEFT)) || (container.getInput().isKeyDown(Input.KEY_A))){
+				//blaine
+				player1.setDirection("left");
+				player1.setX(player1.getX()-1);
+
+					try {
+						if (entityCollisionWith(map2)){
+							player1.setX(player1.getX()+1);
+						}
+						e = enemyList2.iterator();
+					    while (e.hasNext()) {
+					      s = (Enemy) e.next();
+					      if(s != null)
+					      {
+					    	  if (battle(s)){
+					    		  player1.setX(player1.getX()+20);
+
+									s.setX(s.getX() - 1);
+									s.setPolyX(s.getX());					
+									numCrosses--;
+									injured.play();
+					    	  }
+					      } 
+					    }
+						
+					} catch (SlickException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			}
+					
+					else
+						
+						player1.stopMovement();
+			
+
+			if ((container.getInput().isKeyDown(Input.KEY_RIGHT)) || (container.getInput().isKeyDown(Input.KEY_D))) {
+				//blaine
+				player1.setDirection("right");
+				player1.setX(player1.getX()+1);
+				
+				try {
+					if (entityCollisionWith(map2)){
+						player1.setX(player1.getX()-1);
+					}
+					e = enemyList2.iterator();
+				    while (e.hasNext()) {
+				      s = (Enemy) e.next();
+				      if(s != null)
+				      {
+				    	  if (battle(s)){
+				    		  player1.setX(player1.getX()-20);
+
+								s.setX(s.getX() + 1);
+								s.setPolyX(s.getX());					
+								numCrosses--;
+								injured.play();
+				    	  }
+				      } 
+				    }
+				} catch (SlickException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			
+			if ((container.getInput().isKeyDown(Input.KEY_UP)) || (container.getInput().isKeyDown(Input.KEY_W))){
+				//blaine
+				player1.setDirection("up");
+				player1.setY(player1.getY()-1);
+
+				try {
+					if (entityCollisionWith(map2)){
+						player1.setY(player1.getY()+1);
+					}
+					
+					e = enemyList2.iterator();
+				    while (e.hasNext()) {
+				      s = (Enemy) e.next();
+				      if(s != null)
+				      {
+				    	  if (battle(s)){
+				    		  
+				    		  player1.setY(player1.getY()+20);
+								s.setY(s.getY() - 1);
+								s.setPolyY(s.getY());					
+								numCrosses--;
+								injured.play();
+				    	  }
+				      } 
+				    }
+				} catch (SlickException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			if ((container.getInput().isKeyDown(Input.KEY_DOWN)) || (container.getInput().isKeyDown(Input.KEY_S)))
+			{
+				//blaine
+				player1.setDirection("down");
+				player1.setY(player1.getY()+1);
+				//System.out.println(player1.getDirection());
+
+				try 
+				{
+					if (entityCollisionWith(map2))
+					{
+						player1.setY(player1.getY()-1);
+					}
+					
+					e = enemyList2.iterator();
+				    while (e.hasNext()) {
+				      s = (Enemy) e.next();
+				      if(s != null)
+				      {
+				    	  if (battle(s)){
+				    		  
+				    		  player1.setY(player1.getY()-20);
+
+								s.setY(s.getY() + 1);
+								s.setPolyY(s.getY());					
+								numCrosses--;
+								injured.play();
+				    	  }
+				      } 
+				    }
+				} catch (SlickException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			
+			if ((container.getInput().isKeyDown(Input.KEY_SPACE)))
+			{
+				player1.isAttacking(true);
+
+			}
+
 		}
+		
 	}
 	
 
 	public boolean attack(Enemy e) throws SlickException{
-		if(e.getPoly().intersects(playerAttackPoly)){
+		if(e.getPoly().intersects(player1.getAttackPoly())){
 			return true;
 		}
 		return false;
 	}
 	public boolean battle(Enemy e) throws SlickException{
-			if (e.getPoly().intersects(playerPoly)){
+			if (e.getPoly().intersects(player1.getPoly())){
 				return true;
 		}
 		return false;
 	}
-	public boolean enemyCollision(Enemy e) throws SlickException{
-		for (int i = 0; i < BlockMap.entities.size(); i++){
-			Block entity1 = (Block) BlockMap.entities.get(i);
+	public boolean enemyCollision(Enemy e, BlockMap m) throws SlickException{
+		for (int i = 0; i < m.entities.size(); i++){
+			Block entity1 = (Block) m.entities.get(i);
 			if (e.getPoly().intersects(entity1.poly)){
 				return true;
 			}
@@ -574,24 +630,35 @@ public class Game extends BasicGame {
 		return false;
 	}
 	
-	   public boolean entityCollisionWith() throws SlickException
+	   public boolean entityCollisionWith(BlockMap m) throws SlickException
 	   {
-		   for (int i = 0; i < BlockMap.entities.size(); i++)
+		   for (int i = 0; i < m.entities.size(); i++)
 		   {
-			   Block entity1 = (Block) BlockMap.entities.get(i);
-			   if (playerPoly.intersects(entity1.poly)){
+			   Block entity1 = (Block) m.entities.get(i);
+			   if (player1.getPoly().intersects(entity1.poly)){
 			   	return true;
 		   }
 					
 		}
 	   return false;
 	}
-	
+	   
+	   public boolean doorCollisionWith(Transporter t, BlockMap m) throws SlickException{
+		   for (int i = 0; i < m.entities.size(); i++){
+			   if (player1.getPoly().intersects(t.getPoly())){
+			   	return true;
+			   }	
+		   }
+		   return false;
+	   }
+	   
+	   
+
 	public void render(GameContainer container, Graphics g)  {
 		
 	menu.draw();
 	//theme.play();
-	if(numDeadEnemies >= 9)
+	if(numDeadEnemies >= 5)
 		menuState = 4;
 	
 	if(menuState == 4)
@@ -626,22 +693,51 @@ public class Game extends BasicGame {
 	}
 	if(menuState == 1) // when 'n' is pressed menuState becomes = 1
 	{
-		BlockMap.tmap.render(0, 0);
-		g.drawAnimation(player, playerX, playerY);
-		//g.draw(playerPoly);
-		//g.draw(playerAttackPoly);
+		if (gameState ==1){
+			//System.out.println("###################");
+			map1.tmap.render(0, 0);
+			g.drawAnimation(player1.getAnimation(), player1.getX(), player1.getY());
+			//g.draw(player1.getPoly());
+			//g.draw(player1.getAttackPoly());
+			//g.draw(playerAttackPoly);
+			//g.draw(door.getPoly());
 		
-		Enemy s;
-	    Iterator<Enemy> e = enemyList.iterator();
-	    while (e.hasNext()) {
-	      s = (Enemy) e.next();
-	      if(s != null)
-	      {
-	         g.drawAnimation(s.getAnimation(), s.getX(), s.getY());
-	         s.setPolyX(s.getX());
-	         s.setPolyY(s.getY());
-	      } 
-	    }
+		
+			Enemy s;
+			Iterator<Enemy> e = enemyList.iterator();
+			while (e.hasNext()) {
+				s = (Enemy) e.next();
+				if(s != null){
+					g.drawAnimation(s.getAnimation(), s.getX(), s.getY());
+					s.setPolyX(s.getX());
+					s.setPolyY(s.getY());
+				} 
+			}
+		}
+		
+		else if (gameState == 2){
+			map2.tmap.render(0, 0);
+			
+
+			g.drawAnimation(player1.getAnimation(), player1.getX(), player1.getY());
+			//g.draw(player1.getPoly());
+			//g.draw(player1.getAttackPoly());
+			//g.draw(playerAttackPoly);
+			// g .draw(door.getPoly());
+		
+		
+			Enemy s;
+			Iterator<Enemy> e = enemyList2.iterator();
+			while (e.hasNext()) {
+				s = (Enemy) e.next();
+				if(s != null){
+					g.drawAnimation(s.getAnimation(), s.getX(), s.getY());
+					s.setPolyX(s.getX());
+					s.setPolyY(s.getY());
+				} 
+			}
+		}
+		
 		StatusPanel.draw(0, 480);
 		
 		//Draws the correct amount of red crosses after numCrosses is decremented when there is player enemy contact
@@ -682,14 +778,10 @@ public class Game extends BasicGame {
 			numLives--;
 			numCrosses = 5;
 			menuState = 2;
-		    player = playerLeft;
-			playerX = 320;
-			playerY = 240;
+			player1.setX(320);
+			player1.setY(240);
+
 			direction = "left";
-			playerPoly.setX(playerX);
-			playerPoly.setY(playerY);
-			playerAttackPoly.setX(playerX);
-			playerAttackPoly.setY(playerY);
 		}
 		else
 			numCrosses = 5;
@@ -721,5 +813,6 @@ public class Game extends BasicGame {
 	public static void main(String[] argv) throws SlickException {
 		AppGameContainer container = new AppGameContainer(new Game(), 640, 580, false);
 		container.start();
+		
 	}
 }
